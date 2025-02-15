@@ -19,7 +19,7 @@ const Dashboard = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user);
-        // ดึงข้อมูลเพิ่มเติมของผู้ใช้จาก Firestore
+        //ดึงข้อมูลเพิ่มเติมของผู้ใช้จาก Firestore
         const userRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
@@ -32,7 +32,7 @@ const Dashboard = () => {
     return () => unsubscribe();
   }, [navigate]);
 
-  /** ✅ ฟังก์ชันเพิ่มห้องเรียน */
+  /*ฟังก์ชันเพิ่มห้องเรียน */
   const handleCreateClassroom = async () => {
     if (!user) return;
     if (!subjectCode || !subjectName || !roomName) {
@@ -49,7 +49,7 @@ const Dashboard = () => {
     }
   };
 
-  /** ✅ ฟังก์ชันแก้ไขห้องเรียน */
+  /*ฟังก์ชันแก้ไขห้องเรียน */
   const handleEditClassroom = async () => {
     if (!editingClassroom) return;
     try {
@@ -67,7 +67,7 @@ const Dashboard = () => {
     }
   };
 
-  /** ✅ ฟังก์ชันลบห้องเรียน */
+  /*ฟังก์ชันลบห้องเรียน */
   const handleDeleteClassroom = async (cid) => {
     if (!window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบห้องเรียนนี้?")) return;
     try {
@@ -79,7 +79,7 @@ const Dashboard = () => {
     }
   };
 
-  /** ✅ ฟังก์ชันเลือกห้องเรียนสำหรับแก้ไข */
+  /*ฟังก์ชันเลือกห้องเรียนสำหรับแก้ไข */
   const handleSelectClassroom = (classroom) => {
     setEditingClassroom(classroom);
     setSubjectCode(classroom.info.code);
@@ -88,7 +88,7 @@ const Dashboard = () => {
     setPhotoURL(classroom.info.photo);
   };
 
-  /** ✅ ฟังก์ชัน Reset Form */
+  /*ฟังก์ชัน Reset Form */
   const resetForm = () => {
     setSubjectCode("");
     setSubjectName("");
@@ -99,7 +99,7 @@ const Dashboard = () => {
 
   return (
     <div className="p-5">
-      {/* ✅ ส่วนโปรไฟล์ผู้ใช้ */}
+      {/*ส่วนโปรไฟล์ผู้ใช้ */}
       {user && (
         <div className="p-4 mb-5 border rounded-lg shadow-md flex items-center bg-white">
           <img
@@ -124,7 +124,7 @@ const Dashboard = () => {
 
       <h1 className="text-xl font-bold">Dashboard</h1>
 
-      {/* ✅ ฟอร์มเพิ่ม/แก้ไขห้องเรียน */}
+      {/* ฟอร์มเพิ่ม/แก้ไขห้องเรียน */}
       {user && (
         <div className="mt-5 p-4 border rounded-lg shadow-md bg-white">
           <h2 className="text-lg font-semibold">
@@ -146,12 +146,12 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* ✅ รายชื่อห้องเรียน */}
+      {/*รายชื่อห้องเรียน */}
       {user && (
         <ClassroomList uid={user.uid} onEdit={handleSelectClassroom} onDelete={handleDeleteClassroom} />
       )}
-
-      {/* ✅ ปุ่มออกจากระบบ */}
+      
+      {/*ปุ่มออกจากระบบ */}
       <button onClick={() => auth.signOut()} className="mt-5 w-full bg-red-500 text-white p-2 rounded-md hover:bg-red-600">
         ออกจากระบบ
       </button>
