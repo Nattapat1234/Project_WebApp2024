@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc, setDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import "../styles/Profile.css";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -78,58 +79,44 @@ const Profile = () => {
   };
 
   return (
-    <div className="p-5">
-      <h1 className="text-xl font-bold">แก้ไขข้อมูลส่วนตัว</h1>
+    <div className="profile-container">
+      <h1 className="profile-title">แก้ไขข้อมูลส่วนตัว</h1>
 
-      {/* แสดงรูปโปรไฟล์ */}
-      <div className="flex items-center mt-4">
+      <div className="profile-picture-container">
         <img
           src={photo || "https://via.placeholder.com/100"}
           alt="Profile"
-          className="w-24 h-24 rounded-full border mr-4"
+          className="profile-image"
         />
         <div>
-          <p className="text-gray-600">อัปเดตรูปภาพโดยใช้ URL</p>
+          <p className="profile-text">อัปเดตรูปภาพโดยใช้ URL</p>
         </div>
       </div>
 
-      {/* ฟอร์มแก้ไขข้อมูล */}
       <input
         type="text"
         placeholder="ชื่อ"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full p-2 border rounded-md mt-2"
+        className="profile-input"
       />
       <input
         type="text"
         placeholder="URL รูปโปรไฟล์"
         value={photo}
         onChange={(e) => setPhoto(e.target.value)}
-        className="w-full p-2 border rounded-md mt-2"
+        className="profile-input"
       />
 
-      {/*ปุ่มบันทึกข้อมูล */}
-      <button
-        onClick={handleSaveProfile}
-        className="mt-3 w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-      >
+      <button onClick={handleSaveProfile} className="save-btn">
         บันทึกข้อมูล
       </button>
 
-      {/* ปุ่มลบบัญชี */}
-      <button
-        onClick={handleDeleteProfile}
-        className="mt-3 w-full bg-red-500 text-white p-2 rounded-md hover:bg-red-600"
-      >
+      <button onClick={handleDeleteProfile} className="delete-btn">
         ลบบัญชีของฉัน
       </button>
 
-      {/*ปุ่มกลับหน้าแรก */}
-      <button
-        onClick={() => navigate("/")}
-        className="mt-3 w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600"
-      >
+      <button onClick={() => navigate("/dashboard")} className="back-btn">
         กลับหน้าแรก
       </button>
     </div>

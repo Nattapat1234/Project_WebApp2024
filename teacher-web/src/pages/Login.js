@@ -1,7 +1,9 @@
+// filepath: /d:/File/CS Term 6/MobileWeb/MobileWebProject/Project_WebApp2024/teacher-web/src/pages/Login.js
 import React, { useState } from "react";
 import { auth } from "../services/firebase"; // ตรวจสอบให้แน่ใจว่า `firebase.js` ถูกต้อง
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import "../styles/Login.css"; // เรียกใช้ไฟล์ Login.css
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,7 +16,7 @@ function Login() {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/"); // 🔄 นำผู้ใช้ไปที่ Dashboard หลังจากล็อกอิน
+      navigate("/dashboard"); // 🔄 นำผู้ใช้ไปที่ Dashboard หลังจากล็อกอิน
     } catch (err) {
       setError(err.message);
     }
@@ -25,27 +27,27 @@ function Login() {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      navigate("/");
+      navigate("/dashboard"); // 🔄 นำผู้ใช้ไปที่ Dashboard หลังจากล็อกอิน
     } catch (err) {
       setError(err.message);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+    <div className="login-container">
+      <div className="login-box">
+        <h2 className="login-title">Login</h2>
         
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="login-error">{error}</p>}
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin}>
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-2 border rounded-md"
+            className="login-input"
           />
           <input
             type="password"
@@ -53,9 +55,9 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full p-2 border rounded-md"
+            className="login-input"
           />
-          <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
+          <button type="submit" className="login-button">
             Login
           </button>
         </form>
@@ -63,7 +65,7 @@ function Login() {
         <div className="mt-4">
           <button
             onClick={handleGoogleLogin}
-            className="w-full bg-red-500 text-white p-2 rounded-md hover:bg-red-600"
+            className="google-button"
           >
             Sign in with Google
           </button>

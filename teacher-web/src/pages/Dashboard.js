@@ -1,9 +1,11 @@
+// filepath: /d:/File/CS Term 6/MobileWeb/MobileWebProject/Project_WebApp2024/teacher-web/src/pages/Dashboard.js
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
 import ClassroomList from "../components/ClassroomList";
 import { createClassroom, updateClassroom, deleteClassroom } from "../services/classroomService";
 import { doc, getDoc } from "firebase/firestore";
+import "../styles/Dashboard.css";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -98,23 +100,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="dashboard-container">
       {/*ส่วนโปรไฟล์ผู้ใช้ */}
       {user && (
-        <div className="p-4 mb-5 border rounded-lg shadow-md flex items-center bg-white">
+        <div className="profile-card">
           <img
             src={userData?.photo || "https://via.placeholder.com/80"}
             alt="Profile"
-            className="w-16 h-16 rounded-full border mr-4"
           />
           <div>
-            <h2 className="text-xl font-bold">
+            <h2>
               สวัสดี, {userData?.name || user.email.split("@")[0]}
             </h2>
-            <p className="text-gray-500">{user.email}</p>
+            <p>{user.email}</p>
             <button
               onClick={() => navigate("/profile")}
-              className="mt-2 bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600"
             >
               แก้ไขข้อมูลส่วนตัว
             </button>
@@ -122,26 +122,26 @@ const Dashboard = () => {
         </div>
       )}
 
-      <h1 className="text-xl font-bold">Dashboard</h1>
+      <h1>Dashboard</h1>
 
       {/* ฟอร์มเพิ่ม/แก้ไขห้องเรียน */}
       {user && (
-        <div className="mt-5 p-4 border rounded-lg shadow-md bg-white">
-          <h2 className="text-lg font-semibold">
+        <div className="form-container">
+          <h2>
             {editingClassroom ? "แก้ไขห้องเรียน" : "เพิ่มห้องเรียน"}
           </h2>
-          <input type="text" placeholder="รหัสวิชา" value={subjectCode} onChange={(e) => setSubjectCode(e.target.value)} className="w-full p-2 border rounded-md mt-2" />
-          <input type="text" placeholder="ชื่อวิชา" value={subjectName} onChange={(e) => setSubjectName(e.target.value)} className="w-full p-2 border rounded-md mt-2" />
-          <input type="text" placeholder="ชื่อห้องเรียน" value={roomName} onChange={(e) => setRoomName(e.target.value)} className="w-full p-2 border rounded-md mt-2" />
-          <input type="text" placeholder="URL รูปภาพ (ไม่บังคับ)" value={photoURL} onChange={(e) => setPhotoURL(e.target.value)} className="w-full p-2 border rounded-md mt-2" />
+          <input type="text" placeholder="รหัสวิชา" value={subjectCode} onChange={(e) => setSubjectCode(e.target.value)} />
+          <input type="text" placeholder="ชื่อวิชา" value={subjectName} onChange={(e) => setSubjectName(e.target.value)} />
+          <input type="text" placeholder="ชื่อห้องเรียน" value={roomName} onChange={(e) => setRoomName(e.target.value)} />
+          <input type="text" placeholder="URL รูปภาพ (ไม่บังคับ)" value={photoURL} onChange={(e) => setPhotoURL(e.target.value)} />
           
           {editingClassroom ? (
             <div className="mt-3 flex space-x-2">
-              <button onClick={handleEditClassroom} className="w-full bg-yellow-500 text-white p-2 rounded-md hover:bg-yellow-600">บันทึกการแก้ไข</button>
-              <button onClick={resetForm} className="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600">ยกเลิก</button>
+              <button onClick={handleEditClassroom} className="edit-button">บันทึกการแก้ไข</button>
+              <button onClick={resetForm} className="cancel-button">ยกเลิก</button>
             </div>
           ) : (
-            <button onClick={handleCreateClassroom} className="mt-3 w-full bg-green-500 text-white p-2 rounded-md hover:bg-green-600">เพิ่มห้องเรียน</button>
+            <button onClick={handleCreateClassroom} className="create-button">เพิ่มห้องเรียน</button>
           )}
         </div>
       )}
@@ -152,7 +152,7 @@ const Dashboard = () => {
       )}
       
       {/*ปุ่มออกจากระบบ */}
-      <button onClick={() => auth.signOut()} className="mt-5 w-full bg-red-500 text-white p-2 rounded-md hover:bg-red-600">
+      <button onClick={() => auth.signOut()} className="logout-button">
         ออกจากระบบ
       </button>
     </div>

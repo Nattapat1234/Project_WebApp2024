@@ -1,0 +1,281 @@
+/* สไตล์หลักของแดชบอร์ด */
+.dashboard-container {
+  padding: 30px;
+  max-width: 900px;
+  margin: 30px auto;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* สไตล์ของโปรไฟล์ */
+.profile-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 25px;
+  transition: 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profile-card img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid #007bff;
+  margin-right: 20px;
+}
+
+.profile-card h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.profile-card p {
+  color: #888;
+}
+
+.profile-card button {
+  background: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-left: auto;
+}
+
+.profile-card button:hover {
+  background: #0056b3;
+}
+
+/* ฟอร์มเพิ่ม/แก้ไขห้องเรียน */
+.form-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 25px;
+  transition: 0.3s ease;
+}
+
+.form-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.form-container h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-container input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.form-container input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* ปุ่มเพิ่มห้องเรียน */
+.create-button {
+  background: #007bff;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.create-button:hover {
+  background: #0056b3;
+}
+
+.create-button:active {
+  background: #0056b3;
+  transform: translateY(2px);
+}
+
+/* ตารางแสดงห้องเรียน */
+.classroom-container{
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  margin-bottom: 25px;
+  transition: 0.3s ease;
+}
+
+.classroom-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.classroom-container h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* ตารางแสดงห้องเรียน */
+.edit-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+/* คอนเทนเนอร์ที่ใช้สำหรับปุ่มทั้งหมด */
+.button-container {
+  display: flex;
+  flex-wrap: wrap; /* ทำให้ปุ่มไม่ล้นออกจาก container */
+  gap: 15px; /* ระยะห่างระหว่างปุ่ม */
+  justify-content: space-between; /* จัดเรียงปุ่มให้สวยงาม */
+  margin-top: 20px;
+}
+
+/* ปุ่มการกระทำห้องเรียน */
+.view-button, .edit-button, .delete-button, .logout-button {
+  flex: 1 1 30%; /* ทำให้ปุ่มทั้ง 4 มีขนาดที่พอดีกัน */
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.view-button {
+  background: #007bff;
+  color: white;
+}
+
+.view-button:hover {
+  background: #0056b3;
+}
+
+.view-button:active {
+  background: #0042a2;
+  transform: translateY(2px);
+}
+
+.edit-button {
+  background: #ffc107;
+  color: white;
+}
+
+.edit-button:hover {
+  background: #d39e00;
+}
+
+.edit-button:active {
+  background: #c69500;
+  transform: translateY(2px);
+}
+
+.delete-button {
+  background: #dc3545;
+  color: white;
+}
+
+.delete-button:hover {
+  background: #c82333;
+}
+
+.delete-button:active {
+  background: #bd2130;
+  transform: translateY(2px);
+}
+
+.logout-button {
+  background: #dc3545;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+  margin-top: 20px;
+}
+
+/* ปุ่มบันทึกการแก้ไขห้องเรียน */
+.update-button ,.cancel-button {
+  flex: 1 1 30%; /* ทำให้ปุ่มทั้ง 4 มีขนาดที่พอดีกัน */
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.update-button {
+  background: #28a745;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.update-button:hover {
+  background: #218838;
+}
+
+.update-button:active {
+  background: #1e7e34;
+  transform: translateY(2px);
+}
+
+.cancel-button {
+  background: #dc3545;
+  color: white;
+}
+
+.cancel-button:hover {
+  background: #c82333;
+}
+
+.cancel-button:active {
+  background: #bd2130;
+  transform: translateY(2px);
+}
+
+/* ปุ่มออกจากระบบ */
+.logout-button:hover {
+  background: #c82333;
+}
+
+.logout-button:active {
+  background: #bd2130;
+  transform: translateY(2px);
+}
