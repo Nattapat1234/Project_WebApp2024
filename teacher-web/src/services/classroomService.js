@@ -1,44 +1,81 @@
 import { db } from "./firebase";
+import { doc, setDoc, updateDoc, getDoc, deleteDoc, collection } from "firebase/firestore";
 
-// ฟังก์ชันสร้างห้องเรียนใหม่
+/** ฟังก์ชันสร้างห้องเรียนใหม่ */
 export const createClassroom = async (uid, subjectCode, subjectName, photoURL, roomName) => {
-  const newClassroomRef = db.collection("classroom").doc();
-  const cid = newClassroomRef.id;
+  try {
+    const newClassroomRef = doc(collection(db, "classroom")); // 🔹 สร้าง reference ห้องเรียนใหม่
+    const cid = newClassroomRef.id;
 
-  const classroomData = {
-    owner: uid,
-    info: {
-      code: subjectCode,
-      name: subjectName,
-      photo: photoURL,
-      room: roomName,
-    },
-    students: {},
-    checkin: {},
-  };
+    const classroomData = {
+      owner: uid, // 🔹 ระบุเจ้าของห้องเรียน
+      info: {
+        code: subjectCode,
+        name: subjectName,
+        photo: photoURL || "",
+        room: roomName,
+      },
+    };
 
-  await newClassroomRef.set(classroomData);
+    await setDoc(newClassroomRef, classroomData); // 🔹 บันทึกข้อมูลลง Firestore
 
-  // เพิ่มห้องเรียนเข้าไปใน user profile
-  await db.collection("users").doc(uid).update({
-    [`classroom.${cid}`]: { status: 1 },
-  });
+    // ตรวจสอบว่า `users/{uid}` มีอยู่หรือไม่
+    const userRef = doc(db, "users", uid);
+    const userDoc = await getDoc(userRef);
 
-  return cid;
+    if (userDoc.exists()) {
+      // ถ้ามี user อยู่แล้ว อัปเดตข้อมูล
+      await updateDoc(userRef, {
+        [`classroom.${cid}`]: { status: 1 },
+      });
+    } else {
+      // ถ้ายังไม่มี ให้สร้างเอกสารใหม่
+      await setDoc(userRef, {
+        name: "ไม่ทราบชื่อ",
+        email: "",
+        photo: "",
+        classroom: {
+          [cid]: { status: 1 },
+        },
+      });
+    }
+
+    return cid;
+  } catch (error) {
+    console.error("🔥 Error creating classroom:", error);
+    throw error;
+  }
 };
 
-// ฟังก์ชันเพิ่มนักเรียนในห้องเรียน
-export const enrollStudentInClassroom = async (uid, cid, studentId, studentName) => {
-  const studentRef = db.collection("classroom").doc(cid).collection("students").doc(uid);
+/** ฟังก์ชันแก้ไขข้อมูลห้องเรียน */
+export const updateClassroom = async (cid, updatedData) => {
+  try {
+    const classroomRef = doc(db, "classroom", cid);
+    await updateDoc(classroomRef, { info: updatedData });
+  } catch (error) {
+    console.error("🔥 Error updating classroom:", error);
+    throw error;
+  }
+};
 
-  await studentRef.set({
-    stdid: studentId,
-    name: studentName,
-    status: 0, // 0 = รออนุมัติ
-  });
+/** ฟังก์ชันลบห้องเรียน */
+export const deleteClassroom = async (cid, uid) => {
+  try {
+    await deleteDoc(doc(db, "classroom", cid));
 
-  // เพิ่มห้องเรียนใน profile ของผู้ใช้
-  await db.collection("users").doc(uid).update({
-    [`classroom.${cid}`]: { status: 2 },
-  });
+    // 🔹 ลบห้องเรียนออกจาก `users/{uid}/classroom`
+    const userRef = doc(db, "users", uid);
+    const userDoc = await getDoc(userRef);
+
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      const updatedClassrooms = { ...userData.classroom };
+      delete updatedClassrooms[cid];
+
+      await updateDoc(userRef, { classroom: updatedClassrooms });
+    }
+  } catch (error) {
+    console.error("Error deleting classroom:", error);
+    throw error;
+  }
 };
