@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background:#5C7285;  /* ใช้สีพื้น */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 2.5rem;
+    border-radius: 1.2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.login-box:hover {
+    transform: scale(1.02);
+}
+
+.login-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color:rgb(0, 0, 0);
+}
+
+.login-error {
+    color: #ff4f4f;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 79, 79, 0.2);
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+}
+
+.login-input {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 0.8rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+
+.login-input::placeholder {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.login-input:focus {
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.02);
+}
+
+.login-button {
+    width: 100%;
+    background: #2b7fff; /* ใช้สีพื้น */
+    color: white;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.login-button:hover {
+    background: #1e5bcc; /* สีเข้มขึ้นเมื่อ hover */
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.google-button {
+    width: 100%;
+    background: #ff4b2b; /* ใช้สีพื้น */
+    color: white;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    margin-top: 0.75rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.google-button:hover {
+    background: #d43f27; /* สีเข้มขึ้นเมื่อ hover */
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
