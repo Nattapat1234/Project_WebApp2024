@@ -1,39 +1,151 @@
-/* Classroom.css */
+/* ตั้งค่าพื้นฐาน */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+/* คอนเทนเนอร์หลักของห้องเรียน */
 .classroom-container {
+  max-width: 900px;
+  margin: 20px auto;
   padding: 20px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
+/* หัวข้อหลักของห้องเรียน */
 .classroom-title {
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
-  align-item: center;
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
+/* ข้อมูลของห้องเรียน */
+.classroom-container p {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+}
+
+.qr-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.qr-box {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* สไตล์ของ AddStudent */
+.add-student-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.add-student-container input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.add-student-container button {
+  padding: 8px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-student-container button:hover {
+  background-color: #45a049;
+}
+
+/* รายชื่อนักเรียน */
 .student-list {
   margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: white;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.student-list h2 {
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.student-list ul {
+  list-style: none;
+  padding: 0;
 }
 
 .student-item {
   display: flex;
   justify-content: space-between;
-  background: #f9f9f9;
+  align-items: center;
+  background: #fff;
   padding: 10px;
+  margin-bottom: 8px;
   border-radius: 5px;
-  margin-top: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.student-actions button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  border-radius: 5px;
+.student-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.student-edit-btn {
+  padding: 8px 14px;
+  font-size: 14px;
+  width: 80px; /* กำหนดความกว้างให้เท่ากัน */
+  text-align: center;
+  border: none;
   cursor: pointer;
+  border-radius: 5px;
 }
 
+.student-delete-btn {
+  padding: 16px 24px;
+  font-size: 14px;
+  width: 80px; /* กำหนดความกว้างให้เท่ากัน */
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.student-edit-btn {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.student-edit-btn:hover {
+  background-color: #e0a800;
+}
+
+.student-delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.student-delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Modal สำหรับแก้ไขข้อมูล */
 .edit-modal {
   position: fixed;
   top: 0;
@@ -42,99 +154,49 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .edit-modal-content {
   background: white;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.qr-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  max-width: 300px;
-  margin: 20px auto;
+  border-radius: 10px;
+  width: 400px;
   text-align: center;
 }
 
-.qr-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.qr-box {
-  padding: 10px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  display: inline-block;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.qr-code {
-  border-radius: 8px;
-}
-
-.qr-description {
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 10px;
-}
-
-.add-student-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  max-width: 350px;
-  margin: 20px auto;
-  text-align: center;
-}
-
-.add-student-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.add-student-input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+.edit-modal-content input {
+  width: 90%;
+  padding: 8px;
+  margin: 10px 0;
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 5px;
 }
 
-.add-student-input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.add-student-button {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 15px;
+.edit-modal-content button {
+  padding: 8px 15px;
+  margin: 5px;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s;
+  border-radius: 5px;
+  transition: 0.3s;
 }
 
-.add-student-button:hover {
-  background-color: #0056b3;
+.edit-modal-content button:first-child {
+  background-color: #4caf50;
+  color: white;
+}
+
+.edit-modal-content button:first-child:hover {
+  background-color: #45a049;
+}
+
+.edit-modal-content button:last-child {
+  background-color: #dc3545;
+  color: white;
+}
+
+.edit-modal-content button:last-child:hover {
+  background-color: #c82333;
 }

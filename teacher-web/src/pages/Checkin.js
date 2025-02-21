@@ -15,8 +15,8 @@ const Checkin = () => {
   }, [cid, cno]);
 
   return (
-    <div className="p-5">
-      <h1 className="text-xl font-bold">เช็คชื่อนักเรียน</h1>
+    <div className="checkin-container">
+      <h1 className="student-checkin">เช็คชื่อนักเรียน</h1>
       <ul>
         {students.map((student, index) => (
           <li key={student.id}>

@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../services/firebase";
 import { useParams } from "react-router-dom";
-import { doc, getDoc, collection, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  onSnapshot,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import QRCodeGenerator from "../components/QRCodeGenerator";
 import AddStudent from "../components/AddStudent";
 import "../styles/Classroom.css"; // ✅ นำเข้าไฟล์ CSS
@@ -18,7 +25,7 @@ const Classroom = () => {
     const fetchClassroom = async () => {
       const classroomRef = doc(db, "classroom", cid);
       const docSnap = await getDoc(classroomRef);
-      
+
       if (docSnap.exists()) {
         setClassroom(docSnap.data());
       } else {
@@ -31,10 +38,10 @@ const Classroom = () => {
 
   useEffect(() => {
     if (!cid) return;
-    
+
     const studentsRef = collection(db, "classroom", cid, "students");
     const unsubscribe = onSnapshot(studentsRef, (snapshot) => {
-      setStudents(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setStudents(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
 
     return () => unsubscribe();
@@ -42,7 +49,7 @@ const Classroom = () => {
 
   const handleDeleteStudent = async (sid) => {
     if (!window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบนักเรียนคนนี้?")) return;
-    
+
     try {
       await deleteDoc(doc(db, "classroom", cid, "students", sid));
       alert("ลบนักเรียนสำเร็จ!");
@@ -56,7 +63,13 @@ const Classroom = () => {
     if (!editingStudent) return;
 
     try {
-      const studentRef = doc(db, "classroom", cid, "students", editingStudent.id);
+      const studentRef = doc(
+        db,
+        "classroom",
+        cid,
+        "students",
+        editingStudent.id
+      );
       await updateDoc(studentRef, {
         name: editName,
         stdid: editStdId,
@@ -80,10 +93,12 @@ const Classroom = () => {
     <div className="classroom-container">
       {classroom ? (
         <>
-          <h1 className="classroom-title">{classroom.info?.name || "ไม่มีชื่อวิชา"}</h1>
+          <h1 className="classroom-title">
+            {classroom.info?.name || "ไม่มีชื่อวิชา"}
+          </h1>
           <p>รหัสวิชา: {classroom.info?.code || "ไม่มีรหัสวิชา"}</p>
           <p>ห้องเรียน: {classroom.info?.room || "ไม่มีข้อมูลห้องเรียน"}</p>
-          
+
           <QRCodeGenerator cid={cid} />
           <AddStudent cid={cid} />
 
@@ -93,10 +108,22 @@ const Classroom = () => {
               <ul>
                 {students.map((student) => (
                   <li key={student.id} className="student-item">
-                    <span>{student.stdid} - {student.name}</span>
+                    <span>
+                      {student.stdid} - {student.name}
+                    </span>
                     <div className="student-actions">
-                      <button onClick={() => openEditModal(student)} className="edit-btn">แก้ไข</button>
-                      <button onClick={() => handleDeleteStudent(student.id)} className="delete-btn">ลบ</button>
+                      <button
+                        onClick={() => openEditModal(student)}
+                        className="student-edit-btn"
+                      >
+                        แก้ไข
+                      </button>
+                      <button
+                        onClick={() => handleDeleteStudent(student.id)}
+                        className="student-delete-btn"
+                      >
+                        ลบ
+                      </button>
                     </div>
                   </li>
                 ))}
@@ -114,8 +141,16 @@ const Classroom = () => {
         <div className="edit-modal">
           <div className="edit-modal-content">
             <h2>แก้ไขข้อมูลนักเรียน</h2>
-            <input type="text" value={editStdId} onChange={(e) => setEditStdId(e.target.value)} />
-            <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} />
+            <input
+              type="text"
+              value={editStdId}
+              onChange={(e) => setEditStdId(e.target.value)}
+            />
+            <input
+              type="text"
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+            />
             <div>
               <button onClick={handleEditStudent}>บันทึก</button>
               <button onClick={() => setEditingStudent(null)}>ยกเลิก</button>
