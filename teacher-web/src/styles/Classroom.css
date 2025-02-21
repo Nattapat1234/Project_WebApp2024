@@ -200,3 +200,17 @@ body {
 .edit-modal-content button:last-child:hover {
   background-color: #c82333;
 }
+
+.checkin-button {
+  padding: 8px 15px;
+  background-color:rgba(13, 0, 255, 0.73);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.checkin-button:hover {
+  background-color:rgb(13, 0, 255);
+}

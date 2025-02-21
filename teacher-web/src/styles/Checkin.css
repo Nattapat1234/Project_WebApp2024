@@ -1,19 +1,144 @@
-/* filepath: /d:/File/CS Term 6/MobileWeb/MobileWebProject/Project_WebApp2024/teacher-web/src/styles/Checkin.css */
-.checkin-container {
-    padding: 2rem;
+/* ตั้งค่าพื้นฐาน */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+  
+  /* คอนเทนเนอร์หลักของการเช็คชื่อ */
+  .checkin-container {
+    padding: 30px;
+    max-width: 900px;
+    margin: 30px auto;
     background-color: #f9f9f9;
-}
-
-.checkin-header {
-    font-size: 2rem;
+    border-radius: 10px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* หัวข้อหลักของการเช็คชื่อ */
+  .checkin-title {
+    font-size: 24px;
     font-weight: bold;
-    margin-bottom: 1rem;
     color: #333;
-}
-
-.checkin-content {
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  /* แสดงสถานะการเช็คชื่อ */
+  .checkin-status {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .status-badge {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  .status-open {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .status-closed {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  /* ปุ่มแอ็คชัน */
+  .checkin-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .btn-open {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .btn-open:hover {
+    background-color: #45a049;
+  }
+  
+  .btn-close {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .btn-close:hover {
+    background-color: #c82333;
+  }
+  
+  .btn-save {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .btn-save:hover {
+    background-color: #0056b3;
+  }
+  
+  .btn-question {
+    background-color: #ffc107;
+    color: white;
+  }
+  
+  .btn-question:hover {
+    background-color: #e0a800;
+  }
+  
+  /* รายชื่อนักเรียน */
+  .student-list {
+    margin-top: 20px;
+  }
+  
+  .student-list-title {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .student-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .student-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-delete {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .btn-delete:hover {
+    background-color: #c82333;
+  }

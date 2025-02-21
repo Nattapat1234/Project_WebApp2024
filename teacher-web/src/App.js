@@ -5,6 +5,7 @@ import Classroom from "./pages/Classroom";
 import Checkin from "./pages/Checkin";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import Question from "./pages/Question";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/classroom/:cid/checkin/:cno" element={<Checkin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/classroom/:cid/checkin" element={<Checkin />} />
+        <Route path="/classroom/:cid/question" element={<Question />} />
       </Routes>
     </Router>
   );
