@@ -13,21 +13,10 @@
     "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-<<<<<<< HEAD
     "react-router-dom": "^7.1.5",
-<<<<<<< HEAD
     "react-scripts": "^3.4.4",
-    "teacher-web": "file:"
-=======
-    "react-scripts": "^3.0.1",
-    "tailwindcss": "^4.0.6"
->>>>>>> ff4abe48647b2acfc5c23fb7be5903fba92196b2
-=======
-    "react-router-dom": "^6.29.0",
-    "react-scripts": "^3.0.1",
     "tailwindcss": "^4.0.6",
     "teacher-web": "file:"
->>>>>>> sigco
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
