@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createQuestion, submitAnswer, closeQuestion } from "../services/questionService";
 import { auth } from "../services/firebase";
-import "../styles/Question.css";
 
 const QuestionPanel = ({ cid, cno, isTeacher }) => {
   const [questionText, setQuestionText] = useState("");

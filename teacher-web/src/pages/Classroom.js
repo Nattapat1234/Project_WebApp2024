@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../services/firebase";
 import { useParams, Link } from "react-router-dom";
-import { doc, getDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, collection, onSnapshot, deleteDoc } from "firebase/firestore";
 import QRCodeGenerator from "../components/QRCodeGenerator";
 import AddStudent from "../components/AddStudent";
+import "../styles/Classroom.css";
 
 const Classroom = () => {
   const { cid } = useParams();
@@ -34,26 +35,48 @@ const Classroom = () => {
     return () => unsubscribe();
   }, [cid]);
 
+  const handleDeleteStudent = async (studentId) => {
+    if (window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบนักเรียนคนนี้?")) {
+      try {
+        await deleteDoc(doc(db, "classroom", cid, "students", studentId));
+        alert("ลบนักเรียนสำเร็จ!");
+      } catch (error) {
+        console.error("Error deleting student:", error);
+        alert("ไม่สามารถลบนักเรียนได้");
+      }
+    }
+  };
+
   return (
-    <div className="p-5">
+    <div className="classroom-container">
       {classroom ? (
         <>
-          <h1 className="text-xl font-bold">{classroom.info?.name || "ไม่มีชื่อวิชา"}</h1>
+          <h1 className="classroom-title">{classroom.info?.name || "ไม่มีชื่อวิชา"}</h1>
           <p>รหัสวิชา: {classroom.info?.code || "ไม่มีรหัสวิชา"}</p>
           <p>ห้องเรียน: {classroom.info?.room || "ไม่มีข้อมูลห้องเรียน"}</p>
 
           {/* ✅ แสดง QR Code สำหรับเข้าห้องเรียน */}
-          <QRCodeGenerator cid={cid} type="classroom" />
+          <div className="qr-box">
+            <QRCodeGenerator cid={cid} type="classroom" />
+          </div>
 
-          <AddStudent cid={cid} />
+          <div className="add-student-container">
+            <AddStudent cid={cid} />
+          </div>
 
-          <div className="mt-5 p-4 border rounded-lg shadow-md bg-white">
-            <h2 className="text-lg font-semibold">รายชื่อนักเรียน</h2>
+          <div className="student-list">
+            <h2>รายชื่อนักเรียน</h2>
             {students.length > 0 ? (
               <ul>
                 {students.map((student) => (
-                  <li key={student.id} className="mt-2 flex justify-between bg-gray-100 p-2 rounded-md">
+                  <li key={student.id} className="student-item">
                     <span>{student.stdid} - {student.name}</span>
+                    <button
+                      className="student-delete-btn"
+                      onClick={() => handleDeleteStudent(student.id)}
+                    >
+                      ลบ
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -62,7 +85,7 @@ const Classroom = () => {
             )}
           </div>
 
-          <Link to={`/classroom/${cid}/checkin`} className="mt-3 block bg-purple-500 text-white p-2 rounded-md text-center hover:bg-purple-600">
+          <Link to={`/classroom/${cid}/checkin`} className="checkin-button">
             ไปที่หน้าเช็คชื่อ
           </Link>
         </>

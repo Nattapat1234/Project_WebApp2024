@@ -1,62 +1,120 @@
-.question-panel {
-    padding: 16px;
-    background: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-  
-  .question-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-  }
-  
-  .question-input,
-  .answer-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-  
-  .question-button,
-  .answer-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .question-button.submit {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .question-button.submit:hover {
-    background-color: #0056b3;
-  }
-  
-  .question-button.close {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .question-button.close:hover {
-    background-color: #c82333;
-  }
-  
-  .answer-button.submit {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .answer-button.submit:hover {
-    background-color: #218838;
-  }
-  
+/* ตั้งค่าพื้นฐาน */
+.question-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* หัวข้อหลัก */
+.question-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* ฟอร์มตั้งคำถาม */
+.question-form {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.form-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.input-field {
+  width: 80%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* จัดกล่องปุ่มให้เรียงในแนวนอน */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* ปุ่ม */
+.btn-create, .btn-close {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn-create {
+  background-color: #4caf50;
+}
+
+.btn-create:hover {
+  background-color: #45a049;
+}
+
+.btn-close {
+  background-color: #dc3545;
+}
+
+.btn-close:hover {
+  background-color: #c82333;
+}
+
+/* ส่วนแสดงคำถาม */
+.question-display {
+  background: #fff8dc;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.display-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.display-text {
+  font-size: 18px;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* รายการคำตอบ */
+.answer-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 20px;
+}
+
+.answer-list {
+  list-style: none;
+  padding: 0;
+}
+
+.answer-item {
+  background: #fff;
+  padding: 10px;
+  margin: 5px auto;
+  width: 80%;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #444;
+}
