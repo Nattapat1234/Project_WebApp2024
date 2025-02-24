@@ -1,5 +1,5 @@
 {
-  "name": "student_app",
+  "name": "check_zie_app_3",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -16,10 +16,14 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
+    "check_zie_app_3": "file:",
     "expo": "~52.0.37",
+    "expo-barcode-scanner": "^13.0.1",
     "expo-blur": "~14.0.3",
+    "expo-camera": "~16.0.17",
     "expo-constants": "~17.0.7",
     "expo-font": "~13.0.4",
     "expo-haptics": "~14.0.1",
@@ -30,6 +34,7 @@
     "expo-symbols": "~0.2.2",
     "expo-system-ui": "~4.0.8",
     "expo-web-browser": "~14.0.2",
+    "firebase": "^11.3.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.76.7",

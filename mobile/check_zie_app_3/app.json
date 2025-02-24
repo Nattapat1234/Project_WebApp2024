@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "student_app",
-    "slug": "student_app",
+    "name": "check_zie_app_3",
+    "slug": "check_zie_app_3",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -32,7 +32,9 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-barcode-scanner",
+      "expo-camera"
     ],
     "experiments": {
       "typedRoutes": true
