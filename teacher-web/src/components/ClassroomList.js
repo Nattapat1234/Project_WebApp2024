@@ -3,14 +3,12 @@ import { db } from "../services/firebase";
 import { useNavigate } from "react-router-dom";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import { updateClassroom, deleteClassroom } from "../services/classroomService";
-import "../styles/Classroom.css";
+import "../styles/ClassroomList.css";
 
 const ClassroomList = ({ uid }) => {
   const [classrooms, setClassrooms] = useState([]);
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(null);
-
-  //  ใช้ state เก็บค่าที่ต้องการแก้ไข
   const [editedSubjectCode, setEditedSubjectCode] = useState("");
   const [editedSubjectName, setEditedSubjectName] = useState("");
   const [editedRoomName, setEditedRoomName] = useState("");
@@ -19,7 +17,6 @@ const ClassroomList = ({ uid }) => {
   useEffect(() => {
     if (!uid) return;
 
-    //  โหลดรายวิชาแบบเรียลไทม์
     const classroomsRef = collection(db, "classroom");
     const q = query(classroomsRef, where("owner", "==", uid));
 
@@ -30,7 +27,6 @@ const ClassroomList = ({ uid }) => {
     return () => unsubscribe();
   }, [uid]);
 
-  //  ฟังก์ชันเลือกห้องเรียนเพื่อแก้ไข
   const handleEditClick = (classroom) => {
     setEditMode(classroom.id);
     setEditedSubjectCode(classroom.info.code);
@@ -39,10 +35,9 @@ const ClassroomList = ({ uid }) => {
     setEditedPhotoURL(classroom.info.photo);
   };
 
-  //  ฟังก์ชันบันทึกการแก้ไข
   const handleSaveEdit = async (cid) => {
     if (!editedSubjectCode || !editedSubjectName || !editedRoomName) {
-      alert("กรุณากรอกข้อมูลให้ครบ!");
+      alert("กรุณากรอกข้อมูลให้ครบ");
       return;
     }
     try {
@@ -58,9 +53,8 @@ const ClassroomList = ({ uid }) => {
     }
   };
 
-  //  ฟังก์ชันลบห้องเรียน
   const handleDelete = async (cid) => {
-    if (window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบห้องเรียนนี้?")) {
+    if (window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบห้องเรียนนี้")) {
       try {
         await deleteClassroom(cid, uid);
         alert("ลบห้องเรียนสำเร็จ");
@@ -71,60 +65,27 @@ const ClassroomList = ({ uid }) => {
   };
 
   return (
-    <div className="classroom-container">
-      <h2 className="classroom-header">รายวิชาที่สอน</h2>
+    <div className="classroom-grid">
       {classrooms.length > 0 ? (
-        <ul>
-          {classrooms.map((classroom) => (
-            <li key={classroom.id} className="classroom-item">
-              {editMode === classroom.id ? (
-                /* แสดงฟอร์มแก้ไข */
-                <div className="edit-form">
-                  <input
-                    type="text"
-                    placeholder="รหัสวิชา"
-                    value={editedSubjectCode}
-                    onChange={(e) => setEditedSubjectCode(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="ชื่อวิชา"
-                    value={editedSubjectName}
-                    onChange={(e) => setEditedSubjectName(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="ชื่อห้องเรียน"
-                    value={editedRoomName}
-                    onChange={(e) => setEditedRoomName(e.target.value)}
-                  />
-                  <input
-                    type="text"
-                    placeholder="URL รูปภาพ (ไม่บังคับ)"
-                    value={editedPhotoURL}
-                    onChange={(e) => setEditedPhotoURL(e.target.value)}
-                  />
-                  <div className="button-container">
-                    <button onClick={() => handleSaveEdit(classroom.id)} className="update-button">บันทึก</button>
-                    <button onClick={() => setEditMode(null)} className="cancel-button">ยกเลิก</button>
-                  </div>
-                </div>
-              ) : (
-                /* แสดงข้อมูลปกติ */
-                <div className="classroom-actions">
-                  <div>
-                    <h3>{classroom.info.name}</h3>
-                  </div>
-                  <div className="button-container">
-                    <button onClick={() => navigate(`/classroom/${classroom.id}`)} className="view-button">ดูรายละเอียด</button>
-                    <button onClick={() => handleEditClick(classroom)} className="edit-button">แก้ไข</button>
-                    <button onClick={() => handleDelete(classroom.id)} className="delete-button">ลบ</button>
-                  </div>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
+        classrooms.map((classroom) => (
+          <div key={classroom.id} className="classroom-card">
+            <img
+              src={classroom.info.photo || "https://via.placeholder.com/300x150"}
+              alt={classroom.info.name}
+              className="classroom-image"
+            />
+            <div className="classroom-content">
+              <h3>{classroom.info.name}</h3>
+              <p>รหัสวิชา: {classroom.info.code}</p>
+              <p>ห้อง: {classroom.info.room}</p>
+              <div className="button-group">
+                <button onClick={() => navigate(`/classroom/${classroom.id}`)} className="view-button">ดูรายละเอียด</button>
+                <button onClick={() => handleEditClick(classroom)} className="edit-button">แก้ไข</button>
+                <button onClick={() => handleDelete(classroom.id)} className="delete-button">ลบ</button>
+              </div>
+            </div>
+          </div>
+        ))
       ) : (
         <p className="no-classroom-message">ยังไม่มีห้องเรียน</p>
       )}

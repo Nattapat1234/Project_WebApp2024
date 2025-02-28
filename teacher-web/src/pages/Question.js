@@ -1,102 +1,109 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { doc, collection, getDocs, onSnapshot, updateDoc, setDoc } from "firebase/firestore";
+import { doc, collection, getDocs, onSnapshot, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import "../styles/Question.css";
 
 const Question = () => {
-  const { cid } = useParams();
-  const [cno, setCno] = useState(null);
-  const [questionNo, setQuestionNo] = useState("");
+  const { cid, cno } = useParams();
+  const [questionList, setQuestionList] = useState([]);
   const [questionText, setQuestionText] = useState("");
-  const [questionShow, setQuestionShow] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
-
-  useEffect(() => {
-    if (!cid) return;
-    const fetchLatestCheckin = async () => {
-      const checkinRef = collection(db, "classroom", cid, "checkin");
-      const snapshot = await getDocs(checkinRef);
-      if (!snapshot.empty) {
-        const latestDoc = snapshot.docs[snapshot.docs.length - 1];
-        setCno(latestDoc.id);
-      }
-    };
-    fetchLatestCheckin();
-  }, [cid]);
+  const [students, setStudents] = useState([]);
+  const [nextQuestionNo, setNextQuestionNo] = useState(1);
 
   useEffect(() => {
     if (!cid || !cno) return;
-    const questionRef = doc(db, "classroom", cid, "checkin", cno);
+    const questionRef = collection(db, "classroom", cid, "checkin", cno, "questions");
+
     const unsubscribe = onSnapshot(questionRef, (snapshot) => {
-      if (snapshot.exists()) {
-        setQuestionNo(snapshot.data().question_no || "");
-        setQuestionText(snapshot.data().question_text || "");
-        setQuestionShow(snapshot.data().question_show || false);
-      }
+      const questions = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      })).sort((a, b) => a.question_no - b.question_no);
+
+      setQuestionList(questions);
+      setNextQuestionNo(questions.length > 0 ? questions[questions.length - 1].question_no + 1 : 1);
     });
+
     return () => unsubscribe();
   }, [cid, cno]);
 
   useEffect(() => {
-    if (!cid || !cno || !questionNo || isNaN(questionNo) || questionNo === "") return;
-    const answersRef = collection(db, "classroom", cid, "checkin", cno, "answers", String(questionNo), "students");
+    if (!cid || !cno || !selectedQuestion) {
+      setAnswers([]);
+      setStudents([]);
+      return;
+    }
+
+    const answersRef = collection(db, "classroom", cid, "checkin", cno, "answers", selectedQuestion, "students");
     const unsubscribe = onSnapshot(answersRef, (snapshot) => {
-      setAnswers(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      const answersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setAnswers(answersData);
+      setStudents([...new Set(answersData.map(a => a.student_name))]);
     });
+
     return () => unsubscribe();
-  }, [cid, cno, questionNo]);
+  }, [cid, cno, selectedQuestion]);
 
   const handleCreateQuestion = async () => {
-    if (!questionNo || !questionText) {
-      alert("กรุณากรอกข้อที่ และ ข้อความคำถาม");
+    if (!questionText.trim()) {
+      alert("กรุณากรอกข้อความคำถาม");
       return;
     }
-    if (isNaN(questionNo)) {
-      alert("หมายเลขคำถามต้องเป็นตัวเลข");
-      return;
-    }
-    const questionRef = doc(db, "classroom", cid, "checkin", cno);
+
+    const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", String(nextQuestionNo));
+
     try {
-      await updateDoc(questionRef, {
-        question_no: Number(questionNo),
+      await setDoc(questionRef, {
+        question_no: nextQuestionNo,
         question_text: questionText,
-        question_show: true,
+        question_show: false,
       });
-      const questionCollectionRef = doc(db, "classroom", cid, "checkin", cno, "answers", String(questionNo));
-      await setDoc(questionCollectionRef, { createdAt: new Date().toISOString() }, { merge: true });
-      alert("✅ ตั้งคำถามสำเร็จ!");
+
+      alert(`✅ เพิ่มคำถามข้อที่ ${nextQuestionNo} สำเร็จ!`);
+      setQuestionText("");
     } catch (error) {
       console.error("❌ Error creating question:", error);
-      alert("❌ เกิดข้อผิดพลาดในการตั้งคำถาม");
+      alert("❌ เกิดข้อผิดพลาดในการเพิ่มคำถาม");
     }
   };
 
-  const handleCloseQuestion = async () => {
-    const questionRef = doc(db, "classroom", cid, "checkin", cno);
+  const handleToggleQuestion = async (qid, isShowing) => {
+    const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", qid);
+
     try {
-      await updateDoc(questionRef, {
-        question_show: false,
-      });
-      alert("✅ ปิดคำถามสำเร็จ!");
+      await updateDoc(questionRef, { question_show: !isShowing });
+      alert(`✅ ${!isShowing ? "เริ่มถาม" : "ปิดคำถาม"} ข้อที่ ${qid} สำเร็จ!`);
     } catch (error) {
-      console.error("❌ Error closing question:", error);
-      alert("❌ เกิดข้อผิดพลาดในการปิดคำถาม");
+      console.error("❌ Error toggling question:", error);
+      alert("❌ เกิดข้อผิดพลาดในการเปลี่ยนสถานะคำถาม");
+    }
+  };
+
+  const handleDeleteQuestion = async (qid) => {
+    if (window.confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบคำถามข้อที่ ${qid}?`)) {
+      const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", qid);
+
+      try {
+        await deleteDoc(questionRef);
+        alert(`✅ ลบคำถามข้อที่ ${qid} สำเร็จ!`);
+        if (selectedQuestion === qid) setSelectedQuestion(null);
+      } catch (error) {
+        console.error("❌ Error deleting question:", error);
+        alert("❌ เกิดข้อผิดพลาดในการลบคำถาม");
+      }
     }
   };
 
   return (
     <div className="question-container">
       <h1 className="question-title">หน้าถาม-ตอบ</h1>
+
       <div className="question-form">
-        <h2 className="form-title">ตั้งคำถาม</h2>
-        <input
-          type="number"
-          value={questionNo}
-          onChange={(e) => setQuestionNo(e.target.value)}
-          className="input-field"
-          placeholder="ข้อที่ (เลข)"
-        />
+        <h2 className="form-title">เพิ่มคำถามใหม่</h2>
+        <p>หมายเลขคำถามถัดไป: <strong>{nextQuestionNo}</strong></p>
         <input
           type="text"
           value={questionText}
@@ -104,23 +111,58 @@ const Question = () => {
           className="input-field"
           placeholder="พิมพ์คำถาม"
         />
-        <div className="button-container">
-        <button onClick={handleCreateQuestion} className="btn-create">เริ่มถาม</button>
-        <button onClick={handleCloseQuestion} className="btn-close">ปิดคำถาม</button>
-        </div>
+        <button onClick={handleCreateQuestion} className="btn-create">เพิ่มคำถาม</button>
       </div>
-      {questionShow && (
-        <div className="question-display">
-          <h2 className="display-title">คำถามที่ {questionNo}</h2>
-          <p className="display-text">{questionText}</p>
-        </div>
-      )}
-      <h2 className="answer-title">คำตอบจากนักเรียน</h2>
-      <ul className="answer-list">
-        {answers.map((answer, index) => (
-          <li key={index} className="answer-item">{answer.text} ({answer.time})</li>
+
+      <h2 className="question-list-title">รายการคำถาม</h2>
+      <ul className="question-list">
+        {questionList.map((q) => (
+          <li key={q.id} className="question-item">
+            <span onClick={() => setSelectedQuestion(selectedQuestion === q.id ? null : q.id)}>
+              {q.question_no}. {q.question_text}
+            </span>
+            <div className="question-actions">
+              <button onClick={() => handleToggleQuestion(q.id, q.question_show)}
+                className={q.question_show ? "btn-close" : "btn-create"}>
+                {q.question_show ? "ปิดคำถาม" : "เริ่มถาม"}
+              </button>
+              <button onClick={() => handleDeleteQuestion(q.id)} className="btn-delete">
+                ลบคำถาม
+              </button>
+            </div>
+          </li>
         ))}
       </ul>
+
+      {selectedQuestion && (
+        <div className="answer-container">
+          <h2 className="answer-title">คำตอบของคำถามที่ {selectedQuestion}</h2>
+
+          <h3 className="student-title">นักเรียนที่ตอบคำถาม</h3>
+          <ul className="student-list">
+            {students.length > 0 ? (
+              students.map((student, index) => (
+                <li key={index} className="student-item">{student}</li>
+              ))
+            ) : (
+              <p>ยังไม่มีนักเรียนที่ตอบ</p>
+            )}
+          </ul>
+
+          <h3 className="answer-list-title">คำตอบจากนักเรียน</h3>
+          <ul className="answer-list">
+            {answers.length > 0 ? (
+              answers.map((answer, index) => (
+                <li key={index} className="answer-item">
+                  <strong>{answer.student_name}:</strong> {answer.text} ({answer.time})
+                </li>
+              ))
+            ) : (
+              <p>ยังไม่มีคำตอบ</p>
+            )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

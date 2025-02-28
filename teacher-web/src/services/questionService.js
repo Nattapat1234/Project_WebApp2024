@@ -1,21 +1,16 @@
 import { db } from "../services/firebase";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 
-/** ✅ ฟังก์ชันตั้งคำถาม */
+/** ฟังก์ชันสร้างคำถาม */
 export const createQuestion = async (cid, cno, questionNo, questionText) => {
   if (!cid || !cno || !questionNo || !questionText) {
-    throw new Error("❌ ข้อมูลไม่ครบ กรุณาตรวจสอบค่า cid, cno, questionNo และ questionText");
+    throw new Error("ข้อมูลไม่ครบ กรุณาตรวจสอบค่า cid, cno, questionNo และ questionText");
   }
 
-  const questionRef = doc(db, "classroom", cid, "checkin", cno);
+  const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", String(questionNo));
 
   try {
-    const docSnap = await getDoc(questionRef);
-    if (!docSnap.exists()) {
-      throw new Error("❌ ไม่พบรอบเช็คชื่อ");
-    }
-
-    await updateDoc(questionRef, {
+    await setDoc(questionRef, {
       question_no: Number(questionNo),
       question_text: questionText,
       question_show: true,
@@ -28,20 +23,18 @@ export const createQuestion = async (cid, cno, questionNo, questionText) => {
   }
 };
 
-/** ✅ ฟังก์ชันปิดคำถาม */
-export const closeQuestion = async (cid, cno) => {
-  if (!cid || !cno) {
-    throw new Error("❌ ข้อมูลไม่ครบ กรุณาตรวจสอบค่า cid และ cno");
+/** ฟังก์ชันปิดคำถาม */
+export const closeQuestion = async (cid, cno, questionNo) => {
+  if (!cid || !cno || !questionNo) {
+    throw new Error("ข้อมูลไม่ครบ กรุณาตรวจสอบค่า cid, cno และ questionNo");
   }
 
-  const questionRef = doc(db, "classroom", cid, "checkin", cno);
+  const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", String(questionNo));
 
   try {
-    await updateDoc(questionRef, {
-      question_show: false,
-    });
+    await updateDoc(questionRef, { question_show: false });
 
-    console.log("✅ ปิดคำถามสำเร็จ");
+    console.log(`✅ ปิดคำถามข้อที่ ${questionNo} สำเร็จ`);
   } catch (error) {
     console.error("❌ Error closing question:", error);
     throw error;

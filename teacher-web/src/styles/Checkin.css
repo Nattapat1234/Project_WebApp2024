@@ -1,144 +1,200 @@
-/* ตั้งค่าพื้นฐาน */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  
-  /* คอนเทนเนอร์หลักของการเช็คชื่อ */
-  .checkin-container {
-    padding: 30px;
-    max-width: 900px;
-    margin: 30px auto;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* หัวข้อหลักของการเช็คชื่อ */
-  .checkin-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  /* แสดงสถานะการเช็คชื่อ */
-  .checkin-status {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .status-badge {
-    font-size: 18px;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 5px;
-    display: inline-block;
-  }
-  
-  .status-open {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .status-closed {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  /* ปุ่มแอ็คชัน */
-  .checkin-actions {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .btn-open {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .btn-open:hover {
-    background-color: #45a049;
-  }
-  
-  .btn-close {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .btn-close:hover {
-    background-color: #c82333;
-  }
-  
-  .btn-save {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .btn-save:hover {
-    background-color: #0056b3;
-  }
-  
-  .btn-question {
-    background-color: #ffc107;
-    color: white;
-  }
-  
-  .btn-question:hover {
-    background-color: #e0a800;
-  }
-  
-  /* รายชื่อนักเรียน */
-  .student-list {
-    margin-top: 20px;
-  }
-  
-  .student-list-title {
-    text-align: center;
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .student-list ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .student-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .btn-delete {
-    background-color: #dc3545;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .btn-delete:hover {
-    background-color: #c82333;
-  }
+/* ✅ ปรับให้เต็มจอมากขึ้น & มีเงา */
+.checkin-container {
+  background-color: #f9f9f9;
+  padding: 40px;
+  border-radius: 15px;
+  max-width: 90%;
+  margin: 20px auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ ส่วนข้อมูลคลาสรูม */
+.classroom-header {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.classroom-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.classroom-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.classroom-code {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.classroom-name {
+  font-size: 20px;
+  color: #666;
+}
+
+/* ✅ เมนูหลัก */
+.menu-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* ✅ ปุ่มสร้างรอบเช็คชื่อให้กลับมามีสี */
+.btn-new {
+  background-color: #28a745;
+  color: white;
+  font-size: 18px;
+  padding: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  width: 250px;
+  transition: 0.3s ease-in-out;
+}
+
+.btn-new:hover {
+  opacity: 0.85;
+}
+
+/* ✅ ปรับดีไซน์ของรายการเช็คชื่อ */
+.checkin-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ✅ กล่องรอบเช็คชื่อ */
+.checkin-card {
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ✅ เปลี่ยนสีของกล่องเมื่อเปิด-ปิด */
+.card-open {
+  background-color: #c3f7c3 !important;
+  border-left: 6px solid #28a745;
+}
+
+.card-closed {
+  background-color: #f8c1c1 !important;
+  border-left: 6px solid #dc3545;
+}
+
+/* ✅ ส่วนหัวของกล่องรอบเช็คชื่อ */
+.checkin-header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* ✅ ปรับดีไซน์ของปุ่ม */
+.checkin-body {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* ✅ ปรับการเรียงปุ่มให้เหมือนในภาพ */
+.checkin-buttons {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* ✅ เรียงเป็น 6 คอลัมน์ */
+  gap: 10px;
+  width: 100%;
+}
+
+/* ✅ ปรับขนาดปุ่มให้เท่ากัน */
+.btn {
+  padding: 14px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+  width: 100%;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* ✅ ปรับสีของปุ่ม */
+.btn-open {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-close {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-qrcode {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-detail {
+  background-color: #ff9800;
+  color: white;
+}
+
+.btn-question {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-delete {
+  background-color: #ff3d3d;
+  color: white;
+}
+
+/* ✅ ให้ปุ่มมีการ Hover ที่ดีขึ้น */
+.btn:hover {
+  opacity: 0.85;
+  transform: scale(1.02);
+}
+
+/* ✅ ปรับป๊อปอัพ QR Code */
+.qr-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qr-popup-content {
+  background: white;
+  padding: 35px;
+  border-radius: 12px;
+  text-align: center;
+  position: relative;
+}
+
+.qr-close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}

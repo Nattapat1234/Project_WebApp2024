@@ -48,14 +48,23 @@ const Classroom = () => {
   };
 
   return (
-    <div className="classroom-container">
+    <div className="classroom-container" style={{
+      minHeight: "100vh",
+      padding: "20px"
+    }}>
       {classroom ? (
         <>
-          <h1 className="classroom-title">{classroom.info?.name || "ไม่มีชื่อวิชา"}</h1>
-          <p>รหัสวิชา: {classroom.info?.code || "ไม่มีรหัสวิชา"}</p>
-          <p>ห้องเรียน: {classroom.info?.room || "ไม่มีข้อมูลห้องเรียน"}</p>
-
-          {/* ✅ แสดง QR Code สำหรับเข้าห้องเรียน */}
+          <div className="classroom-header">
+            <img src={classroom.info?.photo || "default_classroom.jpg"} alt="classroom" className="classroom-image" />
+            <div className="classroom-info">
+              <h1 className="classroom-title">{classroom.info?.name || "ไม่มีชื่อวิชา"}</h1>
+              <p className="classroom-code">รหัสวิชา: {classroom.info?.code || "ไม่มีรหัสวิชา"}</p>
+              <p>ห้องเรียน: {classroom.info?.room || "ไม่มีข้อมูลห้องเรียน"}</p>
+            </div>
+          </div>
+          
+          <Link to={`/classroom/${cid}/checkin`} className="checkin-button">ไปที่หน้าเช็คชื่อ</Link>
+          
           <div className="qr-box">
             <QRCodeGenerator cid={cid} type="classroom" />
           </div>
@@ -71,12 +80,7 @@ const Classroom = () => {
                 {students.map((student) => (
                   <li key={student.id} className="student-item">
                     <span>{student.stdid} - {student.name}</span>
-                    <button
-                      className="student-delete-btn"
-                      onClick={() => handleDeleteStudent(student.id)}
-                    >
-                      ลบ
-                    </button>
+                    <button className="student-delete-btn" onClick={() => handleDeleteStudent(student.id)}>ลบ</button>
                   </li>
                 ))}
               </ul>
@@ -84,10 +88,6 @@ const Classroom = () => {
               <p>ยังไม่มีนักเรียนในห้องนี้</p>
             )}
           </div>
-
-          <Link to={`/classroom/${cid}/checkin`} className="checkin-button">
-            ไปที่หน้าเช็คชื่อ
-          </Link>
         </>
       ) : (
         <p>กำลังโหลดข้อมูล...</p>

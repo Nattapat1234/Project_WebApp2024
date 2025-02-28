@@ -1,45 +1,74 @@
 import { db } from "../services/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc, deleteDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
 
-/** ✅ ฟังก์ชันสร้างเช็คชื่อ */
+/**  ฟังก์ชันสร้างรอบเช็คชื่อใหม่ */
 export const createCheckin = async (cid) => {
-  // ฟังก์ชันนี้จะใช้สร้างการเช็คชื่อใหม่
-};
-
-/** ✅ ฟังก์ชันเปิดเช็คชื่อ */
-export const openCheckin = async (cid, cno) => {
-  const checkinRef = doc(db, "classroom", cid, "checkin", cno);
   try {
-    await updateDoc(checkinRef, {
+    const checkinRef = collection(db, "classroom", cid, "checkin");
+
+    // ค้นหารอบล่าสุด
+    const snapshot = await getDocs(checkinRef);
+    const newCno = `cno${snapshot.size + 1}`; // นับจำนวนรอบแล้วเพิ่มขึ้น 1
+
+    const newCheckinRef = doc(checkinRef, newCno);
+
+    const checkinData = {
+      code: `CHK${newCno}${Date.now()}`,
       status: "open",
-    });
-    console.log(`✅ เปิดเช็คชื่อสำเร็จ: ${cid}/${cno}`);
+      date: new Date().toISOString(),
+    };
+
+    await setDoc(newCheckinRef, checkinData);
+    console.log("✅ Check-in created:", checkinData);
+    return newCno;
   } catch (error) {
-    console.error("❌ Error opening check-in:", error);
+    console.error("❌ Error creating check-in:", error);
     throw error;
   }
 };
 
-/** ✅ ฟังก์ชันปิดเช็คชื่อ */
-export const closeCheckin = async (cid, cno) => {
-  const checkinRef = doc(db, "classroom", cid, "checkin", cno);
+/** ฟังก์ชันเปิดเช็คชื่อ */
+export const openCheckin = async (cid, cno) => {
   try {
-    await updateDoc(checkinRef, {
-      status: "closed",
-    });
-    console.log(`✅ ปิดเช็คชื่อสำเร็จ: ${cid}/${cno}`);
+    await updateDoc(doc(db, "classroom", cid, "checkin", cno), { status: "open" });
   } catch (error) {
-    console.error("❌ Error closing check-in:", error);
+    console.error("Error opening check-in:", error);
     throw error;
   }
 };
 
-/** ✅ ฟังก์ชันบันทึกคะแนน */
-export const saveCheckinScores = async (cid, cno) => {
-  // ฟังก์ชันนี้ใช้บันทึกคะแนนการเช็คชื่อ
+/**  ฟังก์ชันปิดเช็คชื่อ */
+export const closeCheckin = async (cid, cno) => {
+  try {
+    await updateDoc(doc(db, "classroom", cid, "checkin", cno), { status: "closed" });
+  } catch (error) {
+    console.error("Error closing check-in:", error);
+    throw error;
+  }
 };
 
-/** ✅ ฟังก์ชันลบนักเรียนออกจากการเช็คชื่อ */
+/** ฟังก์ชันบันทึกการเช็คชื่อนักเรียน */
+export const checkInStudent = async (cid, cno, studentId, studentName) => {
+  const studentRef = doc(db, "classroom", cid, "checkin", cno, "students", studentId);
+  try {
+    const checkinData = {
+      name: studentName,
+      checkinTime: new Date().toISOString(),
+    };
+
+    await setDoc(studentRef, checkinData);
+  } catch (error) {
+    console.error("Error checking in student:", error);
+    throw error;
+  }
+};
+
+/**  ฟังก์ชันลบนักเรียนออกจากการเช็คชื่อ */
 export const deleteStudent = async (cid, cno, studentId) => {
-  // ฟังก์ชันนี้ใช้ลบนักเรียน
+  try {
+    await deleteDoc(doc(db, "classroom", cid, "checkin", cno, "students", studentId));
+  } catch (error) {
+    console.error("Error deleting student:", error);
+    throw error;
+  }
 };

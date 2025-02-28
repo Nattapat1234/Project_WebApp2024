@@ -1,0 +1,102 @@
+/* ✅ สไตล์ของ Checkin Detail */
+.checkin-detail-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* ✅ หัวข้อหลัก */
+  .checkin-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* ✅ การ์ดข้อมูลเช็คชื่อ */
+  .checkin-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+  }
+  
+  .checkin-header p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  /* ✅ แสดงสถานะเช็คชื่อ */
+  .status-label {
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    margin-top: 10px;
+  }
+  
+  .status-open {
+    background: #28a745;
+  }
+  
+  .status-closed {
+    background: #dc3545;
+  }
+  
+  /* ✅ รายชื่อนักเรียน */
+  .student-list-container {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+  }
+  
+  .student-list-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .student-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .checkin-time {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* ✅ ปุ่มย้อนกลับ */
+  .btn-back {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+  }
+  
+  .btn-back:hover {
+    background: #0056b3;
+  }
+  

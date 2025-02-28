@@ -1,86 +1,152 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { doc, collection, getDocs, onSnapshot } from "firebase/firestore";
-import { createCheckin, openCheckin, closeCheckin, saveCheckinScores, deleteStudent } from "../services/checkinService";
+import { collection, doc, getDoc, onSnapshot, deleteDoc } from "firebase/firestore";
+import { createCheckin, openCheckin, closeCheckin } from "../services/checkinService";
 import { db } from "../services/firebase";
 import QRCodeGenerator from "../components/QRCodeGenerator";
-import "../styles/Checkin.css"; // ✅ ใช้ไฟล์ CSS
+import "../styles/Checkin.css";
 
 const Checkin = () => {
   const { cid } = useParams();
-  const [cno, setCno] = useState(null);
-  const [status, setStatus] = useState("loading");
-  const [students, setStudents] = useState([]);
+  const [classroomInfo, setClassroomInfo] = useState(null); // ✅ ข้อมูลคลาสรูม
+  const [checkinHistory, setCheckinHistory] = useState([]);
+  const [selectedCno, setSelectedCno] = useState(null);
+  const [showQR, setShowQR] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  // ✅ ดึงข้อมูลคลาสรูม
   useEffect(() => {
-    const fetchCheckin = async () => {
-      const checkinRef = collection(db, "classroom", cid, "checkin");
-      const snapshot = await getDocs(checkinRef);
+    const fetchClassroomInfo = async () => {
+      const classroomRef = doc(db, "classroom", cid);
+      const docSnap = await getDoc(classroomRef);
 
-      if (!snapshot.empty) {
-        const latestCheckin = snapshot.docs[snapshot.docs.length - 1];
-        setCno(latestCheckin.id);
-        setStatus(latestCheckin.data().status);
+      if (docSnap.exists()) {
+        setClassroomInfo(docSnap.data().info);
       } else {
-        const newCno = await createCheckin(cid);
-        setCno(newCno);
-        setStatus("open");
+        console.error("ไม่พบข้อมูลห้องเรียน");
       }
     };
 
-    fetchCheckin();
+    fetchClassroomInfo();
   }, [cid]);
 
+  // ✅ ดึงประวัติการเช็คชื่อ
   useEffect(() => {
-    if (!cid || !cno) return;
+    const checkinRef = collection(db, "classroom", cid, "checkin");
+    const unsubscribe = onSnapshot(checkinRef, (snapshot) => {
+      const history = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      })).sort((a, b) => new Date(b.date) - new Date(a.date)); // เรียงจากใหม่ไปเก่า
+      setCheckinHistory(history);
+    });
 
-    const checkinRef = doc(db, "classroom", cid, "checkin", cno);
-    const unsubscribeCheckin = onSnapshot(checkinRef, (snapshot) => {
-      if (snapshot.exists()) {
-        setStatus(snapshot.data().status);
+    return () => unsubscribe();
+  }, [cid]);
+
+  // ✅ สร้างรอบเช็คชื่อใหม่
+  const handleCreateCheckin = async () => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      const newCno = await createCheckin(cid);
+      alert(`✅ สร้างรอบเช็คชื่อใหม่สำเร็จ: ${newCno}`);
+    } catch (error) {
+      console.error("❌ Error creating check-in:", error);
+      alert("ไม่สามารถสร้างรอบเช็คชื่อได้");
+    }
+    setLoading(false);
+  };
+
+  // ✅ ลบรอบเช็คชื่อ
+  const deleteCheckin = async (cno) => {
+    if (window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบรอบเช็คชื่อนี้?")) {
+      try {
+        await deleteDoc(doc(db, "classroom", cid, "checkin", cno));
+        alert("✅ ลบรอบเช็คชื่อสำเร็จ!");
+      } catch (error) {
+        console.error("❌ Error deleting check-in:", error);
+        alert("ไม่สามารถลบรอบเช็คชื่อได้");
       }
-    });
-
-    const studentsRef = collection(db, "classroom", cid, "checkin", cno, "students");
-    const unsubscribeStudents = onSnapshot(studentsRef, (snapshot) => {
-      setStudents(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-    });
-
-    return () => {
-      unsubscribeCheckin();
-      unsubscribeStudents();
-    };
-  }, [cid, cno]);
+    }
+  };
 
   return (
     <div className="checkin-container">
+      {/* ✅ แสดงข้อมูลคลาสรูม */}
+      {classroomInfo && (
+        <div className="classroom-header">
+          <img src={classroomInfo.photo} alt="Classroom" className="classroom-image" />
+          <div className="classroom-info">
+            <h2 className="classroom-code">{classroomInfo.code}</h2>
+            <h3 className="classroom-name">{classroomInfo.name}</h3>
+          </div>
+        </div>
+      )}
+
       <h1 className="checkin-title">หน้าการเช็คชื่อ</h1>
 
-      <div className="checkin-status">
-        <span className={`status-badge ${status === "open" ? "status-open" : "status-closed"}`}>
-          {status === "open" ? "✅ เปิดเช็คชื่ออยู่" : "❌ ปิดเช็คชื่อแล้ว"}
-        </span>
+      <div className="menu-container">
+        <button onClick={handleCreateCheckin} className="btn btn-new" disabled={loading}>
+          {loading ? "กำลังสร้าง..." : "สร้างรอบเช็คชื่อใหม่"}
+        </button>
       </div>
 
-      <div className="checkin-actions">
-        <button onClick={() => openCheckin(cid, cno)} className="btn btn-open">เปิดเช็คชื่อ</button>
-        <button onClick={() => closeCheckin(cid, cno)} className="btn btn-close">ปิดเช็คชื่อ</button>
-        <button onClick={() => saveCheckinScores(cid, cno)} className="btn btn-save">บันทึกเช็คชื่อ</button>
-        <Link to={`/classroom/${cid}/question`} className="btn btn-question">ถาม-ตอบ</Link>
-      </div>
-
-      {/* ✅ ใช้ QR Code ใหม่สำหรับเช็คชื่อ */}
-      {cno && <QRCodeGenerator cid={cid} cno={cno} type="checkin" />}
-
-      <h2 className="student-list-title">รายชื่อนักเรียน</h2>
-      <ul className="student-list">
-        {students.map((student, index) => (
-          <li key={student.id} className="student-item">
-            {index + 1}. {student.stdid} - {student.name}
-            <button onClick={() => deleteStudent(cid, cno, student.id)} className="btn btn-delete">ลบ</button>
-          </li>
+      <h2 className="checkin-history-title">ประวัติการเช็คชื่อ</h2>
+      <div className="checkin-history-list">
+        {checkinHistory.map((checkin, index) => (
+          <div 
+            key={checkin.id} 
+            className={`checkin-card ${checkin.status === "open" ? "card-open" : "card-closed"}`}
+          >
+            <div className="checkin-header">
+              <p>
+                เช็คชื่อรอบที่ {index + 1} วันที่ {new Date(checkin.date).toLocaleDateString()}{" "}
+                {new Date(checkin.date).toLocaleTimeString()}
+              </p>
+            </div>
+            <div className="checkin-body">
+              <div className="checkin-buttons">
+                <button onClick={() => openCheckin(cid, checkin.id)} className="btn btn-open">
+                  เปิด
+                </button>
+                <button onClick={() => closeCheckin(cid, checkin.id)} className="btn btn-close">
+                  ปิด
+                </button>
+                <button
+                  onClick={() => {
+                    setSelectedCno(checkin.id);
+                    setShowQR(true);
+                  }}
+                  className="btn btn-qrcode"
+                >
+                  แสดง QR CODE
+                </button>
+                <Link to={`/classroom/${cid}/checkin/${checkin.id}`} className="btn btn-detail">
+                  ดูรายละเอียด
+                </Link>
+                <Link to={`/classroom/${cid}/checkin/${checkin.id}/question`} className="btn btn-question">
+                  ถามคำถาม
+                </Link>
+                <button onClick={() => deleteCheckin(checkin.id)} className="btn btn-delete">
+                  ลบ
+                </button>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
+
+      {showQR && selectedCno && (
+        <div className="qr-popup">
+          <div className="qr-popup-content">
+            <span className="qr-close" onClick={() => setShowQR(false)}>
+              &times;
+            </span>
+            <QRCodeGenerator cid={cid} cno={selectedCno} type="checkin" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

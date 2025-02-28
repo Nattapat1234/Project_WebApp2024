@@ -1,106 +1,125 @@
-/* ตั้งค่าพื้นฐาน */
+/* ✅ ปรับพื้นหลังและขนาดของคอนเทนเนอร์ */
 .question-container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-  background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  text-align: center;
+  background-color: #e0e0e0;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 1100px; /* ✅ ให้เท่ากับหน้าเช็คชื่อ */
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* หัวข้อหลัก */
+/* ✅ จัดสไตล์หัวข้อ */
 .question-title {
-  font-size: 24px;
+  text-align: center;
+  font-size: 26px;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-/* ฟอร์มตั้งคำถาม */
-.question-form {
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 10px;
   margin-bottom: 20px;
 }
 
-.form-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
+/* ✅ ปรับ input และฟอร์มให้ดูดีขึ้น */
+.question-form {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 }
 
 .input-field {
-  width: 80%;
-  padding: 10px;
-  margin: 8px 0;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  border-radius: 5px;
   font-size: 16px;
 }
 
-/* จัดกล่องปุ่มให้เรียงในแนวนอน */
+/* ✅ ปรับปุ่มให้เหมือนหน้าเช็คชื่อ */
 .button-container {
   display: flex;
-  justify-content: center;
   gap: 10px;
-  margin-top: 10px;
 }
 
-/* ปุ่ม */
 .btn-create, .btn-close {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  flex: 1;
+  text-align: center;
   font-size: 16px;
-  color: white;
-  transition: 0.3s;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s ease-in-out;
 }
 
 .btn-create {
-  background-color: #4caf50;
-}
-
-.btn-create:hover {
-  background-color: #45a049;
+  background-color: #4CAF50;
+  color: white;
 }
 
 .btn-close {
-  background-color: #dc3545;
-}
-
-.btn-close:hover {
   background-color: #c82333;
+  color: white;
 }
 
-/* ส่วนแสดงคำถาม */
-.question-display {
-  background: #fff8dc;
+.btn-create:hover, .btn-close:hover {
+  opacity: 0.8;
+}
+
+/* ✅ ปรับดีไซน์ของรายการคำถาม */
+.question-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.question-item {
+  background: white;
   padding: 15px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.display-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-}
-
-.display-text {
+.question-item span {
   font-size: 18px;
-  color: #555;
-  margin-top: 5px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-/* รายการคำตอบ */
+.question-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-delete {
+  background-color: #ff3d3d;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-delete:hover {
+  opacity: 0.8;
+}
+
+/* ✅ ปรับดีไซน์ของคำตอบ */
+.answer-container {
+  margin-top: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .answer-title {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
-  color: #333;
-  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .answer-list {
@@ -109,12 +128,24 @@
 }
 
 .answer-item {
-  background: #fff;
-  padding: 10px;
-  margin: 5px auto;
-  width: 80%;
+  background-color: #f0f0f0;
+  padding: 12px;
+  margin-bottom: 8px;
   border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   font-size: 16px;
-  color: #444;
+}
+
+/* ✅ ปรับดีไซน์ของรายชื่อนักเรียนที่ตอบคำถาม */
+.student-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.student-item {
+  background: #e9ecef;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  font-size: 16px;
 }
