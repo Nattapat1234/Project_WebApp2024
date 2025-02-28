@@ -1,6 +1,6 @@
 /* ✅ ปรับให้เต็มจอมากขึ้น & มีเงา */
 .checkin-container {
-  background-color: #f9f9f9;
+  background-color: #ffffff; /* Light theme background */
   padding: 40px;
   border-radius: 15px;
   max-width: 90%;
@@ -185,10 +185,37 @@
 
 .qr-popup-content {
   background: white;
-  padding: 35px;
-  border-radius: 12px;
+  padding: 50px; /* Increased padding */
+  border-radius: 15px; /* Increased border-radius */
   text-align: center;
   position: relative;
+  max-width: 600px; /* Set a fixed max-width */
+  width: 90%;
+  height: auto; /* Adjust height to fit content */
+  overflow: auto; /* Added overflow for scrolling if content is too large */
+}
+
+/* ✅ ปรับขนาด QR Code */
+.qr-code {
+  width: 80%; /* Adjust width as needed */
+  max-width: 500px; /* Set a maximum width */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 auto; /* Center the QR code */
+  justify-content: center;
+}
+
+.qr-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.qr-description {
+  font-size: 24px;
+  color: #666;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .qr-close {

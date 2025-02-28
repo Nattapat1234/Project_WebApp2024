@@ -28,32 +28,33 @@
   
   /* Typography */
   --font-family: 'Poppins', sans-serif;
-  --font-size-sm: 0.875rem;
-  --font-size-md: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
+  --font-size-sm: 1rem; /* Increased font size */
+  --font-size-md: 1.25rem; /* Increased font size */
+  --font-size-lg: 1.5rem; /* Increased font size */
+  --font-size-xl: 1.75rem; /* Increased font size */
+  --font-size-2xl: 2rem; /* Increased font size */
+  --font-size-3xl: 2.5rem; /* Increased font size */
   
   /* Spacing */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
-  --space-8: 3rem;
+  --space-1: 0.5rem; /* Increased spacing */
+  --space-2: 1rem; /* Increased spacing */
+  --space-3: 1.5rem; /* Increased spacing */
+  --space-4: 2rem; /* Increased spacing */
+  --space-5: 2.5rem; /* Increased spacing */
+  --space-6: 3rem; /* Increased spacing */
+  --space-8: 4rem; /* Increased spacing */
+  --space-10: 5rem; /* Increased spacing */
   
   /* Layout */
-  --border-radius-sm: 4px;
-  --border-radius-md: 8px;
-  --border-radius-lg: 12px;
-  --border-radius-xl: 16px;
+  --border-radius-sm: 8px; /* Increased border radius */
+  --border-radius-md: 12px; /* Increased border radius */
+  --border-radius-lg: 16px; /* Increased border radius */
+  --border-radius-xl: 20px; /* Increased border radius */
   
   /* Effects */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.07), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1); /* Increased shadow */
+  --shadow-md: 0 6px 12px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05); /* Increased shadow */
+  --shadow-lg: 0 12px 18px rgba(0, 0, 0, 0.1), 0 8px 12px rgba(0, 0, 0, 0.05); /* Increased shadow */
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
 }
@@ -86,7 +87,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--space-4);
+  padding: var(--space-6);
   min-height: 100vh;
 }
 
@@ -95,8 +96,8 @@ body {
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 480px;
-  padding: var(--space-8);
+  max-width: 800px; /* Increased max-width */
+  padding: var(--space-10);
   transition: transform var(--transition-normal);
   position: relative;
   overflow: hidden;
@@ -108,7 +109,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 6px;
+  height: 8px; /* Increased height */
   background: var(--primary);
 }
 
@@ -119,15 +120,15 @@ body {
   font-size: var(--font-size-3xl);
   font-weight: 600;
   color: var(--gray-900);
-  margin-bottom: var(--space-6);
+  margin-bottom: var(--space-8);
   text-align: center;
 }
 
 .footer-text {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   color: var(--gray-600);
   text-align: center;
-  margin-top: var(--space-6);
+  margin-top: var(--space-8);
 }
 
 .footer-link {
@@ -146,20 +147,20 @@ body {
 /* Form Elements */
 /* ==================== */
 .input-group {
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-6);
 }
 
 .input-label {
   display: block;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
   font-weight: 500;
   color: var(--gray-700);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .login-input {
   width: 100%;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
   padding: var(--space-4);
   border: 1px solid var(--gray-300);
   border-radius: var(--border-radius-md);
@@ -185,7 +186,7 @@ body {
   width: 100%;
   background-color: var(--primary);
   color: white;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
   font-weight: 500;
   padding: var(--space-4);
   border: none;
@@ -212,7 +213,7 @@ body {
   gap: var(--space-3);
   background-color: white;
   color: var(--gray-800);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-lg);
   font-weight: 500;
   padding: var(--space-4);
   border: 1px solid var(--gray-300);
@@ -240,8 +241,8 @@ body {
   align-items: center;
   text-align: center;
   color: var(--gray-500);
-  font-size: var(--font-size-sm);
-  margin: var(--space-5) 0;
+  font-size: var(--font-size-md);
+  margin: var(--space-6) 0;
 }
 
 .divider::before,
@@ -261,8 +262,8 @@ body {
   border-left: 3px solid var(--danger);
   border-radius: var(--border-radius-sm);
   padding: var(--space-3) var(--space-4);
-  margin-bottom: var(--space-5);
-  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-6);
+  font-size: var(--font-size-md);
   text-align: left;
 }
 
@@ -271,12 +272,12 @@ body {
 /* ==================== */
 @media (max-width: 640px) {
   .login-box {
-    padding: var(--space-5);
+    padding: var(--space-8); /* Increased padding */
     max-width: 100%;
   }
   
   .login-title {
     font-size: var(--font-size-2xl);
-    margin-bottom: var(--space-5);
+    margin-bottom: var(--space-8); /* Increased margin-bottom */
   }
 }

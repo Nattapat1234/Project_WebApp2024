@@ -1,56 +1,56 @@
-/* สไตล์หลักของแดชบอร์ด */
+/* Main Dashboard Style */
 .dashboard-container {
-  padding: 30px;
-  max-width: 1200px; /* Increased size */
-  margin: 30px auto;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-  width: 90%; /* Ensure it uses 90% of the available width */
+  padding: 50px; /* Increased padding for better spacing */
+  max-width: 1600px; /* Increased size */
+  margin: 50px auto; /* Increased margin for better spacing */
+  background-color: #ffffff; /* Light theme background */
+  border-radius: 16px; /* Increased border-radius for a modern look */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* Increased shadow for a modern look */
+  width: 95%; /* Ensure it uses 95% of the available width */
 }
 
-/* สไตล์ของโปรไฟล์ */
+/* Profile Card Style */
 .profile-card {
   display: flex;
   align-items: center;
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-  margin-bottom: 25px;
+  background: #ffffff;
+  padding: 30px; /* Increased padding */
+  border-radius: 16px; /* Increased border-radius */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Increased shadow */
+  margin-bottom: 30px; /* Increased margin-bottom */
   transition: 0.3s ease;
 }
 
 .profile-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15); /* Increased shadow */
 }
 
 .profile-card img {
-  width: 70px;
-  height: 70px;
+  width: 90px; /* Increased size */
+  height: 90px; /* Increased size */
   border-radius: 50%;
-  border: 3px solid #007bff;
-  margin-right: 20px;
+  border: 4px solid #007bff; /* Increased border width */
+  margin-right: 25px; /* Increased margin-right */
 }
 
 .profile-card h2 {
-  font-size: 20px;
+  font-size: 24px; /* Increased font size */
   font-weight: bold;
   color: #333;
-  margin-bottom: 5px;
+  margin-bottom: 10px; /* Increased margin-bottom */
 }
 
 .profile-card p {
-  color: #888;
+  color: #666; /* Slightly darker color */
 }
 
 .profile-card button {
   background: #007bff;
   color: white;
-  padding: 10px 15px;
+  padding: 15px 20px; /* Increased padding */
   border: none;
-  border-radius: 8px;
+  border-radius: 10px; /* Increased border-radius */
   cursor: pointer;
   transition: 0.3s;
   margin-left: auto;
@@ -60,35 +60,35 @@
   background: #0056b3;
 }
 
-/* ฟอร์มเพิ่ม/แก้ไขห้องเรียน */
+/* Form Container Style */
 .form-container {
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-  margin-bottom: 25px;
+  background: #ffffff;
+  padding: 50px; /* Increased padding */
+  border-radius: 16px; /* Increased border-radius */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Increased shadow */
+  margin-bottom: 30px; /* Increased margin-bottom */
   transition: 0.3s ease;
 }
 
 .form-container:hover {
   transform: translateY(-5px);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15); /* Increased shadow */
 }
 
 .form-container h2 {
-  font-size: 22px;
+  font-size: 28px; /* Increased font size */
   font-weight: bold;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 25px; /* Increased margin-bottom */
 }
 
 .form-container input {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 20px; /* Increased padding */
+  margin: 15px 0; /* Increased margin */
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 10px; /* Increased border-radius */
+  font-size: 18px; /* Increased font size */
   transition: 0.3s;
 }
 
@@ -97,16 +97,16 @@
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* ปุ่มเพิ่มห้องเรียน */
+/* Create Classroom Button */
 .create-button {
   background: #007bff;
   color: white;
-  padding: 12px;
+  padding: 20px; /* Increased padding */
   border: none;
-  border-radius: 8px;
+  border-radius: 10px; /* Increased border-radius */
   cursor: pointer;
   width: 100%;
-  font-size: 16px;
+  font-size: 18px; /* Increased font size */
   transition: 0.3s;
 }
 
@@ -119,54 +119,54 @@
   transform: translateY(2px);
 }
 
-/* ตารางแสดงห้องเรียน */
-.classroom-container{
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
-  margin-bottom: 25px;
+/* Classroom Container */
+.classroom-container {
+  background: #ffffff;
+  padding: 50px; /* Increased padding */
+  border-radius: 16px; /* Increased border-radius */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Increased shadow */
+  margin-bottom: 30px; /* Increased margin-bottom */
   transition: 0.3s ease;
 }
 
 .classroom-container:hover {
   transform: translateY(-5px);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.15); /* Increased shadow */
 }
 
 .classroom-container h2 {
-  font-size: 22px;
+  font-size: 28px; /* Increased font size */
   font-weight: bold;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 25px; /* Increased margin-bottom */
 }
 
-/* ตารางแสดงห้องเรียน */
+/* Edit Form Input */
 .edit-form input {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 20px; /* Increased padding */
+  margin: 15px 0; /* Increased margin */
   border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 10px; /* Increased border-radius */
+  font-size: 18px; /* Increased font size */
   transition: 0.3s;
 }
 
-/* คอนเทนเนอร์ที่ใช้สำหรับปุ่มทั้งหมด */
+/* Button Container */
 .button-container {
   display: flex;
-  flex-wrap: wrap; /* ทำให้ปุ่มไม่ล้นออกจาก container */
-  gap: 15px; /* ระยะห่างระหว่างปุ่ม */
-  justify-content: space-between; /* จัดเรียงปุ่มให้สวยงาม */
-  margin-top: 20px;
+  flex-wrap: wrap; /* Ensure buttons do not overflow the container */
+  gap: 20px; /* Increased spacing between buttons */
+  justify-content: space-between; /* Arrange buttons nicely */
+  margin-top: 25px; /* Increased margin-top */
 }
 
-/* ปุ่มการกระทำห้องเรียน */
+/* Classroom Action Buttons */
 .view-button, .edit-button, .delete-button, .logout-button {
-  flex: 1 1 30%; /* ทำให้ปุ่มทั้ง 4 มีขนาดที่พอดีกัน */
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 16px;
+  flex: 1 1 30%; /* Ensure all buttons have the same size */
+  padding: 20px; /* Increased padding */
+  border-radius: 10px; /* Increased border-radius */
+  font-size: 18px; /* Increased font size */
   cursor: pointer;
   transition: 0.3s;
 }
@@ -217,21 +217,21 @@
   background: #dc3545;
   color: white;
   width: 100%;
-  padding: 12px;
+  padding: 20px; /* Increased padding */
   border: none;
-  border-radius: 8px;
+  border-radius: 10px; /* Increased border-radius */
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px; /* Increased font size */
   transition: 0.3s;
-  margin-top: 20px;
+  margin-top: 25px; /* Increased margin-top */
 }
 
-/* ปุ่มบันทึกการแก้ไขห้องเรียน */
-.update-button ,.cancel-button {
-  flex: 1 1 30%; /* ทำให้ปุ่มทั้ง 4 มีขนาดที่พอดีกัน */
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 16px;
+/* Update and Cancel Buttons */
+.update-button, .cancel-button {
+  flex: 1 1 30%; /* Ensure all buttons have the same size */
+  padding: 20px; /* Increased padding */
+  border-radius: 10px; /* Increased border-radius */
+  font-size: 18px; /* Increased font size */
   cursor: pointer;
   transition: 0.3s;
 }
@@ -239,12 +239,12 @@
 .update-button {
   background: #28a745;
   color: white;
-  padding: 12px;
+  padding: 20px; /* Increased padding */
   border: none;
-  border-radius: 8px;
+  border-radius: 10px; /* Increased border-radius */
   cursor: pointer;
   width: 100%;
-  font-size: 16px;
+  font-size: 18px; /* Increased font size */
   transition: 0.3s;
 }
 
@@ -271,7 +271,7 @@
   transform: translateY(2px);
 }
 
-/* ปุ่มออกจากระบบ */
+/* Logout Button Hover and Active States */
 .logout-button:hover {
   background: #c82333;
 }
@@ -281,7 +281,13 @@
   transform: translateY(2px);
 }
 
-/* Responsive adjustments */
+/* Responsive Adjustments */
+@media (max-width: 1400px) {
+  .dashboard-container {
+    max-width: 1200px;
+  }
+}
+
 @media (max-width: 1200px) {
   .dashboard-container {
     max-width: 1000px;
@@ -303,6 +309,6 @@
 @media (max-width: 600px) {
   .dashboard-container {
     max-width: 100%;
-    padding: 20px;
+    padding: 30px; /* Increased padding */
   }
 }

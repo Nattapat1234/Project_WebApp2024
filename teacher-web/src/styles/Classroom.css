@@ -1,6 +1,6 @@
 /* ตั้งค่าพื้นฐาน */
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
@@ -8,36 +8,37 @@ body {
 
 /* คอนเทนเนอร์หลักของห้องเรียน */
 .classroom-container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
+  max-width: 1200px; /* Increased size */
+  margin: 40px auto; /* Increased margin for better spacing */
+  padding: 30px; /* Increased padding for better spacing */
   background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slightly increased shadow for a modern look */
+  border-radius: 12px; /* Slightly increased border-radius for a modern look */
 }
 
 /* หัวข้อหลักของห้องเรียน */
 .classroom-title {
-  font-size: 24px;
+  font-size: 28px; /* Slightly increased font size for better readability */
   font-weight: bold;
   color: #333;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px; /* Increased margin-bottom */
 }
 
 /* ข้อมูลของห้องเรียน */
 .classroom-container p {
   text-align: center;
-  font-size: 16px;
+  font-size: 18px; /* Slightly increased font size */
   color: #666;
 }
 
+/* QR Code Section */
 .qr-title {
-  font-size: 20px;
+  font-size: 24px; /* Slightly increased font size */
   font-weight: bold;
   color: #333;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 30px; /* Increased margin-top */
 }
 
 .qr-box {
@@ -51,22 +52,22 @@ body {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin: 20px 0;
+  margin: 30px 0; /* Increased margin */
 }
 
 .add-student-container input {
-  padding: 8px;
+  padding: 12px; /* Increased padding */
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px; /* Increased border-radius */
   font-size: 16px;
 }
 
 .add-student-container button {
-  padding: 8px 15px;
+  padding: 12px 20px; /* Increased padding */
   background-color: #4caf50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Increased border-radius */
   cursor: pointer;
   transition: 0.3s;
 }
@@ -77,13 +78,13 @@ body {
 
 /* รายชื่อนักเรียน */
 .student-list {
-  margin-top: 20px;
+  margin-top: 30px; /* Increased margin-top */
 }
 
 .student-list h2 {
   text-align: center;
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 24px; /* Slightly increased font size */
+  margin-bottom: 20px; /* Increased margin-bottom */
 }
 
 .student-list ul {
@@ -96,35 +97,25 @@ body {
   justify-content: space-between;
   align-items: center;
   background: #fff;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 15px; /* Increased padding */
+  margin-bottom: 10px; /* Increased margin-bottom */
+  border-radius: 8px; /* Increased border-radius */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Slightly increased shadow */
 }
 
 .student-actions {
   display: flex;
-  gap: 5px;
+  gap: 10px; /* Increased gap */
 }
 
-.student-edit-btn {
-  padding: 8px 14px;
+.student-edit-btn, .student-delete-btn {
+  padding: 10px 20px; /* Increased padding */
   font-size: 14px;
-  width: 80px; /* กำหนดความกว้างให้เท่ากัน */
+  width: 100px; /* Increased width */
   text-align: center;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
-}
-
-.student-delete-btn {
-  padding: 16px 24px;
-  font-size: 14px;
-  width: 80px; /* กำหนดความกว้างให้เท่ากัน */
-  text-align: center;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px; /* Increased border-radius */
 }
 
 .student-edit-btn {
@@ -160,26 +151,26 @@ body {
 
 .edit-modal-content {
   background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
+  padding: 30px; /* Increased padding */
+  border-radius: 12px; /* Increased border-radius */
+  width: 500px; /* Increased width */
   text-align: center;
 }
 
 .edit-modal-content input {
   width: 90%;
-  padding: 8px;
+  padding: 12px; /* Increased padding */
   margin: 10px 0;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px; /* Increased border-radius */
 }
 
 .edit-modal-content button {
-  padding: 8px 15px;
+  padding: 12px 20px; /* Increased padding */
   margin: 5px;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 8px; /* Increased border-radius */
   transition: 0.3s;
 }
 
@@ -201,16 +192,17 @@ body {
   background-color: #c82333;
 }
 
+/* Check-in Button */
 .checkin-button {
-  padding: 8px 15px;
-  background-color:rgba(13, 0, 255, 0.73);
+  padding: 12px 20px; /* Increased padding */
+  background-color: rgba(13, 0, 255, 0.73);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* Increased border-radius */
   cursor: pointer;
   transition: 0.3s;
 }
 
 .checkin-button:hover {
-  background-color:rgb(13, 0, 255);
+  background-color: rgb(13, 0, 255);
 }
