@@ -9,6 +9,7 @@ body {
 /* คอนเทนเนอร์หลักของห้องเรียน */
 .classroom-container {
   max-width: 900px;
+  width: 100%;
   margin: 20px auto;
   padding: 20px;
   background: white;

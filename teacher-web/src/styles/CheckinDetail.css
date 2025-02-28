@@ -1,6 +1,7 @@
 /* ✅ สไตล์ของ Checkin Detail */
 .checkin-detail-container {
-    max-width: 900px;
+    max-width: 1000px;
+    width: 100%;
     margin: 40px auto;
     background: #f9f9f9;
     padding: 30px;

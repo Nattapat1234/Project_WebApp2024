@@ -34,15 +34,20 @@ const Checkin = () => {
   useEffect(() => {
     const checkinRef = collection(db, "classroom", cid, "checkin");
     const unsubscribe = onSnapshot(checkinRef, (snapshot) => {
-      const history = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-      })).sort((a, b) => new Date(b.date) - new Date(a.date)); // เรียงจากใหม่ไปเก่า
+      const history = snapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          cno: parseInt(doc.id.replace("cno", ""), 10) // ดึงเลขรอบออกมา
+        }))
+        .sort((a, b) => a.cno - b.cno); // เรียงตามเลขรอบ
+  
       setCheckinHistory(history);
     });
-
+  
     return () => unsubscribe();
   }, [cid]);
+  
 
   // ✅ สร้างรอบเช็คชื่อใหม่
   const handleCreateCheckin = async () => {
