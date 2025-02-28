@@ -8,9 +8,9 @@ body {
 
 /* คอนเทนเนอร์หลักของห้องเรียน */
 .classroom-container {
-  max-width: 1200px; /* Increased size */
-  margin: 40px auto; /* Increased margin for better spacing */
-  padding: 30px; /* Increased padding for better spacing */
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
   background: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slightly increased shadow for a modern look */
   border-radius: 12px; /* Slightly increased border-radius for a modern look */
