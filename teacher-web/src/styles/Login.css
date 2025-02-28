@@ -1,123 +1,282 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
+/* ==================== */
+/* Design System Variables */
+/* ==================== */
+:root {
+  /* Color palette */
+  --primary: #4361ee;
+  --primary-hover: #3a56d4;
+  --secondary: #4cc9f0;
+  --accent: #f72585;
+  --success: #2ecc71;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --light: #f8f9fa;
+  --dark: #212529;
+  
+  /* Neutral colors */
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --gray-800: #343a40;
+  --gray-900: #212529;
+  
+  /* Typography */
+  --font-family: 'Poppins', sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 2rem;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+  
+  /* Layout */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  
+  /* Effects */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.07), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+/* ==================== */
+/* Reset & Base Styles */
+/* ==================== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background:#5C7285;  /* ใช้สีพื้น */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  font-family: var(--font-family);
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  color: var(--gray-800);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5;
 }
 
+/* ==================== */
+/* Layout Components */
+/* ==================== */
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-4);
+  min-height: 100vh;
 }
 
 .login-box {
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    padding: 2.5rem;
-    border-radius: 1.2rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease-in-out;
+  background: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 480px;
+  padding: var(--space-8);
+  transition: transform var(--transition-normal);
+  position: relative;
+  overflow: hidden;
 }
 
-.login-box:hover {
-    transform: scale(1.02);
+.login-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: var(--primary);
 }
 
+/* ==================== */
+/* Typography */
+/* ==================== */
 .login-title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    color:rgb(0, 0, 0);
+  font-size: var(--font-size-3xl);
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-bottom: var(--space-6);
+  text-align: center;
 }
 
-.login-error {
-    color: #ff4f4f;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    background: rgba(255, 79, 79, 0.2);
-    padding: 0.8rem;
-    border-radius: 0.5rem;
+.footer-text {
+  font-size: var(--font-size-sm);
+  color: var(--gray-600);
+  text-align: center;
+  margin-top: var(--space-6);
+}
+
+.footer-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.footer-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* ==================== */
+/* Form Elements */
+/* ==================== */
+.input-group {
+  margin-bottom: var(--space-5);
+}
+
+.input-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--gray-700);
+  margin-bottom: var(--space-2);
 }
 
 .login-input {
-    width: 100%;
-    padding: 0.9rem;
-    border: none;
-    border-radius: 0.8rem;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    background: rgba(255, 255, 255, 0.3);
-    color: #fff;
-    outline: none;
-    transition: 0.3s;
+  width: 100%;
+  font-size: var(--font-size-md);
+  padding: var(--space-4);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius-md);
+  background-color: white;
+  color: var(--gray-800);
+  transition: all var(--transition-normal);
 }
 
 .login-input::placeholder {
-    color: rgba(0, 0, 0, 0.8);
+  color: var(--gray-500);
 }
 
 .login-input:focus {
-    background: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    transform: scale(1.02);
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
 }
 
+/* ==================== */
+/* Buttons */
+/* ==================== */
 .login-button {
-    width: 100%;
-    background: #2b7fff; /* ใช้สีพื้น */
-    color: white;
-    padding: 1rem;
-    border-radius: 0.8rem;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  background-color: var(--primary);
+  color: white;
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  padding: var(--space-4);
+  border: none;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
 }
 
 .login-button:hover {
-    background: #1e5bcc; /* สีเข้มขึ้นเมื่อ hover */
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.login-button:active {
+  transform: translateY(0);
 }
 
 .google-button {
-    width: 100%;
-    background: #ff4b2b; /* ใช้สีพื้น */
-    color: white;
-    padding: 1rem;
-    border-radius: 0.8rem;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: none;
-    margin-top: 0.75rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  background-color: white;
+  color: var(--gray-800);
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  padding: var(--space-4);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  margin-top: var(--space-4);
+  transition: all var(--transition-normal);
 }
 
 .google-button:hover {
-    background: #d43f27; /* สีเข้มขึ้นเมื่อ hover */
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background-color: var(--gray-100);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.google-button:active {
+  transform: translateY(0);
+}
+
+/* ==================== */
+/* Utility Components */
+/* ==================== */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--gray-500);
+  font-size: var(--font-size-sm);
+  margin: var(--space-5) 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--gray-300);
+}
+
+.divider span {
+  padding: 0 var(--space-3);
+}
+
+.login-error {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+  border-left: 3px solid var(--danger);
+  border-radius: var(--border-radius-sm);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  font-size: var(--font-size-sm);
+  text-align: left;
+}
+
+/* ==================== */
+/* Responsive Adjustments */
+/* ==================== */
+@media (max-width: 640px) {
+  .login-box {
+    padding: var(--space-5);
+    max-width: 100%;
+  }
+  
+  .login-title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--space-5);
+  }
 }

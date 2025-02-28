@@ -1,11 +1,12 @@
 /* สไตล์หลักของแดชบอร์ด */
 .dashboard-container {
   padding: 30px;
-  max-width: 900px;
+  max-width: 1200px; /* Increased size */
   margin: 30px auto;
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  width: 90%; /* Ensure it uses 90% of the available width */
 }
 
 /* สไตล์ของโปรไฟล์ */
@@ -278,4 +279,30 @@
 .logout-button:active {
   background: #bd2130;
   transform: translateY(2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    max-width: 1000px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .dashboard-container {
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 800px) {
+  .dashboard-container {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-container {
+    max-width: 100%;
+    padding: 20px;
+  }
 }

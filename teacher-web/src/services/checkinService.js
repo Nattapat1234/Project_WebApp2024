@@ -1,5 +1,5 @@
 import { db } from "../services/firebase";
-import { doc, setDoc, updateDoc, deleteDoc, collection, getDocs, onSnapshot } from "firebase/firestore";
+import { doc, setDoc, updateDoc, deleteDoc, collection, getDocs } from "firebase/firestore";
 
 /**  ฟังก์ชันสร้างรอบเช็คชื่อใหม่ */
 export const createCheckin = async (cid) => {

@@ -47,10 +47,10 @@ const QRCodeGenerator = ({ cid, cno, type }) => {
         ) : qrValue ? (
           <>
             <QRCode value={qrValue} size={200} className="qr-code" />
-            <p className="qr-code-text">{qrValue}</p> {/* ✅ แสดงรหัสตรงกับ QR Code */}
+            {/* <p className="qr-code-text">{qrValue}</p> ✅ แสดงรหัสตรงกับ QR Code */}
           </>
         ) : (
-          <p className="error-message">❌ ไม่พบข้อมูลที่ใช้ได้</p>
+          <p className="error-message">ไม่พบข้อมูลที่ใช้ได้</p>
         )}
       </div>
       <p className="qr-description">
