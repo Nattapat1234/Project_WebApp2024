@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [editingClassroom, setEditingClassroom] = useState(null);
   const navigate = useNavigate();
 
+  /**  โหลดข้อมูลผู้ใช้ */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -29,9 +30,11 @@ const Dashboard = () => {
         navigate("/login");
       }
     });
+
     return () => unsubscribe();
   }, [navigate]);
 
+  /**  สร้างห้องเรียนใหม่ */
   const handleCreateClassroom = async () => {
     if (!user || !subjectCode || !subjectName || !roomName) {
       alert("กรุณากรอกข้อมูลให้ครบ");
@@ -46,6 +49,7 @@ const Dashboard = () => {
     }
   };
 
+  /**  แก้ไขห้องเรียน */
   const handleEditClassroom = async () => {
     if (!editingClassroom) return;
     try {
@@ -62,6 +66,7 @@ const Dashboard = () => {
     }
   };
 
+  /**  ลบห้องเรียน */
   const handleDeleteClassroom = async (cid) => {
     if (!window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบห้องเรียนนี้")) return;
     try {
@@ -71,7 +76,9 @@ const Dashboard = () => {
       alert("ไม่สามารถลบห้องเรียนได้");
     }
   };
+  
 
+  /**  เลือกห้องเรียนที่ต้องการแก้ไข */
   const handleSelectClassroom = (classroom) => {
     setEditingClassroom(classroom);
     setSubjectCode(classroom.info.code);
@@ -80,6 +87,7 @@ const Dashboard = () => {
     setPhotoURL(classroom.info.photo);
   };
 
+  /**  รีเซ็ตฟอร์ม */
   const resetForm = () => {
     setSubjectCode("");
     setSubjectName("");
@@ -90,84 +98,49 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      
-      {/* ส่วนโปรไฟล์ผู้ใช้ */}
-      {user && (
-        <div className="profile-card">
-          <img
-            src={userData?.photo || "https://via.placeholder.com/80"}
-            alt="Profile"
-          />
-          <div>
-            <h2>สวัสดี, {userData?.name || user.email.split("@")[0]}</h2>
-            <p>{user.email}</p>
-            <button onClick={() => navigate("/profile")}>
-              แก้ไขข้อมูลส่วนตัว
-            </button>
-          </div>
-        </div>
-      )}
-
-      <h1>แดชบอร์ด</h1>
-
-      {/* ฟอร์มเพิ่ม/แก้ไขห้องเรียน */}
-      {user && (
-        <div className="form-container">
-          <h2>{editingClassroom ? "แก้ไขห้องเรียน" : "เพิ่มห้องเรียน"}</h2>
-          <input
-            type="text"
-            placeholder="รหัสวิชา"
-            value={subjectCode}
-            onChange={(e) => setSubjectCode(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="ชื่อวิชา"
-            value={subjectName}
-            onChange={(e) => setSubjectName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="ชื่อห้องเรียน"
-            value={roomName}
-            onChange={(e) => setRoomName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="URL รูปภาพ"
-            value={photoURL}
-            onChange={(e) => setPhotoURL(e.target.value)}
-          />
-          {editingClassroom ? (
-            <div className="mt-3 flex space-x-2">
-              <button onClick={handleEditClassroom} className="edit-button">
-                บันทึกการแก้ไข
-              </button>
-              <button onClick={resetForm} className="cancel-button">
-                ยกเลิก
-              </button>
+      {/*  ส่วนโปรไฟล์ผู้ใช้ */}
+      {user && userData && (
+        <>
+          <div className="profile-card">
+            <img src={userData?.photo || "https://via.placeholder.com/80"} alt="Profile" />
+            <div>
+              <h2>สวัสดี, {userData?.name || user.email.split("@")[0]}</h2>
+              <p>{user.email}</p>
+              <button onClick={() => navigate("/profile")}>แก้ไขข้อมูลส่วนตัว</button>
             </div>
-          ) : (
-            <button onClick={handleCreateClassroom} className="create-button">
-              เพิ่มห้องเรียน
-            </button>
-          )}
-        </div>
-      )}
+          </div>
 
-      {/* รายชื่อห้องเรียน */}
-      {user && (
-        <ClassroomList
-          uid={user.uid}
-          onEdit={handleSelectClassroom}
-          onDelete={handleDeleteClassroom}
-        />
-      )}
+          <h1>แดชบอร์ด</h1>
 
-      {/* ปุ่มออกจากระบบ */}
-      <button onClick={() => auth.signOut()} className="logout-button">
-        ออกจากระบบ
-      </button>
+          {/*  ฟอร์มเพิ่ม/แก้ไขห้องเรียน */}
+          <div className="form-container">
+            <h2>{editingClassroom ? "แก้ไขห้องเรียน" : "เพิ่มห้องเรียน"}</h2>
+            <input type="text" placeholder="รหัสวิชา" value={subjectCode} onChange={(e) => setSubjectCode(e.target.value)} />
+            <input type="text" placeholder="ชื่อวิชา" value={subjectName} onChange={(e) => setSubjectName(e.target.value)} />
+            <input type="text" placeholder="ชื่อห้องเรียน" value={roomName} onChange={(e) => setRoomName(e.target.value)} />
+            <input type="text" placeholder="URL รูปภาพ" value={photoURL} onChange={(e) => setPhotoURL(e.target.value)} />
+
+            {editingClassroom ? (
+              <div className="mt-3 flex space-x-2">
+                <button onClick={handleEditClassroom} className="edit-button">บันทึกการแก้ไข</button>
+                <button onClick={resetForm} className="cancel-button">ยกเลิก</button>
+              </div>
+            ) : (
+              <button onClick={handleCreateClassroom} className="create-button">เพิ่มห้องเรียน</button>
+            )}
+          </div>
+
+          {/*  รายชื่อห้องเรียน */}
+          <ClassroomList
+            ownerName={userData.name}
+            onEdit={handleSelectClassroom}
+            onDelete={handleDeleteClassroom}
+          />
+
+          {/*  ปุ่มออกจากระบบ */}
+          <button onClick={() => auth.signOut()} className="logout-button">ออกจากระบบ</button>
+        </>
+      )}
     </div>
   );
 };

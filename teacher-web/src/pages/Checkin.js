@@ -55,7 +55,7 @@ const Checkin = () => {
     setLoading(true);
     try {
       const newCno = await createCheckin(cid);
-      alert(`✅ สร้างรอบเช็คชื่อใหม่สำเร็จ: ${newCno}`);
+      alert(`✅ สร้างรอบเช็คชื่อใหม่สำเร็จ`);
     } catch (error) {
       console.error("❌ Error creating check-in:", error);
       alert("ไม่สามารถสร้างรอบเช็คชื่อได้");
