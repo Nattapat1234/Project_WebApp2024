@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { doc, collection, getDocs, onSnapshot, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
+import { doc, collection, onSnapshot, updateDoc, setDoc, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from "../services/firebase";
 import "../styles/Question.css";
 
@@ -8,18 +8,18 @@ const Question = () => {
   const { cid, cno } = useParams();
   const [questionList, setQuestionList] = useState([]);
   const [questionText, setQuestionText] = useState("");
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [selectedQuestionNo, setSelectedQuestionNo] = useState(null);
   const [answers, setAnswers] = useState([]);
-  const [students, setStudents] = useState([]);
   const [nextQuestionNo, setNextQuestionNo] = useState(1);
 
+  /** ✅ โหลดรายการคำถามแบบ Realtime */
   useEffect(() => {
     if (!cid || !cno) return;
-    const questionRef = collection(db, "classroom", cid, "checkin", cno, "questions");
 
+    const questionRef = collection(db, "classroom", cid, "checkin", cno, "questions");
     const unsubscribe = onSnapshot(questionRef, (snapshot) => {
       const questions = snapshot.docs.map(doc => ({
-        id: doc.id,
+        question_no: Number(doc.id),
         ...doc.data(),
       })).sort((a, b) => a.question_no - b.question_no);
 
@@ -30,23 +30,31 @@ const Question = () => {
     return () => unsubscribe();
   }, [cid, cno]);
 
+  /** ✅ โหลดคำตอบแบบ Realtime เมื่อเลือกคำถาม */
   useEffect(() => {
-    if (!cid || !cno || !selectedQuestion) {
+    if (!cid || !cno || !selectedQuestionNo) {
       setAnswers([]);
-      setStudents([]);
       return;
     }
 
-    const answersRef = collection(db, "classroom", cid, "checkin", cno, "answers", selectedQuestion, "students");
+    const answersRef = collection(db, "classroom", cid, "checkin", cno, "questions", String(selectedQuestionNo), "answers");
     const unsubscribe = onSnapshot(answersRef, (snapshot) => {
-      const answersData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setAnswers(answersData);
-      setStudents([...new Set(answersData.map(a => a.student_name))]);
+      setAnswers(snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          stdid: data.stdid,
+          student_name: data.student_name,
+          text: data.text,
+          time: data.time?.toDate ? data.time.toDate().toLocaleString() : "ไม่มีข้อมูลเวลา", // ✅ แปลง Timestamp เป็น String
+        };
+      }));
     });
 
     return () => unsubscribe();
-  }, [cid, cno, selectedQuestion]);
+  }, [cid, cno, selectedQuestionNo]);
 
+  /** ✅ เพิ่มคำถามใหม่ */
   const handleCreateQuestion = async () => {
     if (!questionText.trim()) {
       alert("กรุณากรอกข้อความคำถาม");
@@ -70,26 +78,36 @@ const Question = () => {
     }
   };
 
-  const handleToggleQuestion = async (qid, isShowing) => {
-    const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", qid);
+  /** ✅ เปิด-ปิดคำถาม */
+  const handleToggleQuestion = async (qno, isShowing) => {
+    const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", String(qno));
 
     try {
       await updateDoc(questionRef, { question_show: !isShowing });
-      alert(`✅ ${!isShowing ? "เริ่มถาม" : "ปิดคำถาม"} ข้อที่ ${qid} สำเร็จ!`);
+      alert(`✅ ${!isShowing ? "เริ่มถาม" : "ปิดคำถาม"} ข้อที่ ${qno} สำเร็จ!`);
     } catch (error) {
       console.error("❌ Error toggling question:", error);
       alert("❌ เกิดข้อผิดพลาดในการเปลี่ยนสถานะคำถาม");
     }
   };
 
-  const handleDeleteQuestion = async (qid) => {
-    if (window.confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบคำถามข้อที่ ${qid}?`)) {
-      const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", qid);
+  /** ✅ ลบคำถามพร้อมคำตอบ */
+  const handleDeleteQuestion = async (qno) => {
+    if (window.confirm(`คุณแน่ใจหรือไม่ว่าต้องการลบคำถามข้อที่ ${qno} และคำตอบทั้งหมด?`)) {
+      const questionRef = doc(db, "classroom", cid, "checkin", cno, "questions", String(qno));
 
       try {
+        // ✅ ลบคำตอบทั้งหมดของคำถามนี้
+        const answersRef = collection(db, "classroom", cid, "checkin", cno, "questions", String(qno), "answers");
+        const answersSnapshot = await getDocs(answersRef);
+        answersSnapshot.forEach(async (doc) => {
+          await deleteDoc(doc.ref);
+        });
+
+        // ✅ ลบคำถาม
         await deleteDoc(questionRef);
-        alert(`✅ ลบคำถามข้อที่ ${qid} สำเร็จ!`);
-        if (selectedQuestion === qid) setSelectedQuestion(null);
+        alert(`✅ ลบคำถามข้อที่ ${qno} และคำตอบทั้งหมดสำเร็จ!`);
+        if (selectedQuestionNo === qno) setSelectedQuestionNo(null);
       } catch (error) {
         console.error("❌ Error deleting question:", error);
         alert("❌ เกิดข้อผิดพลาดในการลบคำถาม");
@@ -117,16 +135,16 @@ const Question = () => {
       <h2 className="question-list-title">รายการคำถาม</h2>
       <ul className="question-list">
         {questionList.map((q) => (
-          <li key={q.id} className="question-item">
-            <span onClick={() => setSelectedQuestion(selectedQuestion === q.id ? null : q.id)}>
+          <li key={q.question_no} className="question-item">
+            <span onClick={() => setSelectedQuestionNo(selectedQuestionNo === q.question_no ? null : q.question_no)}>
               {q.question_no}. {q.question_text}
             </span>
             <div className="question-actions">
-              <button onClick={() => handleToggleQuestion(q.id, q.question_show)}
+              <button onClick={() => handleToggleQuestion(q.question_no, q.question_show)}
                 className={q.question_show ? "btn-close" : "btn-create"}>
                 {q.question_show ? "ปิดคำถาม" : "เริ่มถาม"}
               </button>
-              <button onClick={() => handleDeleteQuestion(q.id)} className="btn-delete">
+              <button onClick={() => handleDeleteQuestion(q.question_no)} className="btn-delete">
                 ลบคำถาม
               </button>
             </div>
@@ -134,27 +152,15 @@ const Question = () => {
         ))}
       </ul>
 
-      {selectedQuestion && (
+      {selectedQuestionNo && (
         <div className="answer-container">
-          <h2 className="answer-title">คำตอบของคำถามที่ {selectedQuestion}</h2>
-
-          <h3 className="student-title">นักเรียนที่ตอบคำถาม</h3>
-          <ul className="student-list">
-            {students.length > 0 ? (
-              students.map((student, index) => (
-                <li key={index} className="student-item">{student}</li>
-              ))
-            ) : (
-              <p>ยังไม่มีนักเรียนที่ตอบ</p>
-            )}
-          </ul>
-
-          <h3 className="answer-list-title">คำตอบจากนักเรียน</h3>
+          <h2 className="answer-title">คำตอบของคำถามที่ {selectedQuestionNo}</h2>
           <ul className="answer-list">
             {answers.length > 0 ? (
               answers.map((answer, index) => (
                 <li key={index} className="answer-item">
-                  <strong>{answer.student_name}:</strong> {answer.text} ({answer.time})
+                  <strong>{answer.stdid} - {answer.student_name}:</strong> {answer.text} 
+                  <span className="text-gray-500"> ({answer.time})</span>
                 </li>
               ))
             ) : (

@@ -8,13 +8,13 @@ import "../styles/Checkin.css";
 
 const Checkin = () => {
   const { cid } = useParams();
-  const [classroomInfo, setClassroomInfo] = useState(null); // ✅ ข้อมูลคลาสรูม
+  const [classroomInfo, setClassroomInfo] = useState(null); //  ข้อมูลคลาสรูม
   const [checkinHistory, setCheckinHistory] = useState([]);
   const [selectedCno, setSelectedCno] = useState(null);
   const [showQR, setShowQR] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // ✅ ดึงข้อมูลคลาสรูม
+  //  ดึงข้อมูลคลาสรูม
   useEffect(() => {
     const fetchClassroomInfo = async () => {
       const classroomRef = doc(db, "classroom", cid);
@@ -49,7 +49,7 @@ const Checkin = () => {
   }, [cid]);
   
 
-  // ✅ สร้างรอบเช็คชื่อใหม่
+  // สร้างรอบเช็คชื่อใหม่
   const handleCreateCheckin = async () => {
     if (loading) return;
     setLoading(true);
@@ -63,7 +63,7 @@ const Checkin = () => {
     setLoading(false);
   };
 
-  // ✅ ลบรอบเช็คชื่อ
+  // ลบรอบเช็คชื่อ
   const deleteCheckin = async (cno) => {
     if (window.confirm("คุณแน่ใจหรือไม่ว่าต้องการลบรอบเช็คชื่อนี้?")) {
       try {
@@ -78,7 +78,7 @@ const Checkin = () => {
 
   return (
     <div className="checkin-container">
-      {/* ✅ แสดงข้อมูลคลาสรูม */}
+      {/*  แสดงข้อมูลคลาสรูม */}
       {classroomInfo && (
         <div className="classroom-header">
           <img src={classroomInfo.photo} alt="Classroom" className="classroom-image" />
