@@ -4,37 +4,29 @@ import { db } from "../services/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 const QRCodeGenerator = ({ cid, cno, type }) => {
-  const [subjectCode, setSubjectCode] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchSubjectCode = async () => {
+    const fetchClassroom = async () => {
       if (!cid) return;
       try {
         const docRef = doc(db, "classroom", cid);
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists() && docSnap.data().info?.code) {
-          setSubjectCode(docSnap.data().info.code);
-        } else {
-          console.error("❌ ไม่พบข้อมูลรหัสวิชา");
-          setSubjectCode(cid); // ✅ ใช้ `cid` เป็นค่าหลักหากไม่มีรหัสวิชา
+        if (!docSnap.exists()) {
+          console.error("❌ ไม่พบข้อมูลห้องเรียน");
         }
       } catch (error) {
         console.error("⚠️ เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
-        setSubjectCode(cid);
       }
       setLoading(false);
     };
-    fetchSubjectCode();
+    fetchClassroom();
   }, [cid]);
 
-  // ✅ สร้างค่า QR Code เป็นแค่ **รหัสห้องเรียน หรือ รหัสเช็คชื่อ**
-  let qrValue = "";
-  if (type === "classroom") {
-    qrValue = subjectCode; // ✅ แสดงรหัสห้องเรียน
-  } else if (type === "checkin" && cno) {
-    qrValue = `${subjectCode}-${cno}`; // ✅ แสดงเป็น `รหัสห้อง-รหัสเช็คชื่อ`
-  }
+  // ✅ กำหนดค่า QR Code:
+  // - "cid" สำหรับเข้าห้องเรียน
+  // - "cid/cno" สำหรับเช็คชื่อ
+  const qrValue = type === "checkin" && cno ? `${cid}/${cno}` : cid;
 
   return (
     <div className="qr-container">
@@ -54,9 +46,9 @@ const QRCodeGenerator = ({ cid, cno, type }) => {
         )}
       </div>
       <p className="qr-description">
-        {type === "classroom" ? "สแกน QR Code เพื่อรับรหัสห้องเรียน" : "สแกน QR Code เพื่อรับรหัสเช็คชื่อ"}
+        {type === "classroom" ? "สแกน QR Code เพื่อเข้าห้องเรียน" : "สแกน QR Code เพื่อเช็คชื่อ"}
       </p>
-      <p className="qr-code-text">รหัสห้องเรียน: {subjectCode || "ไม่มีข้อมูล"}</p>
+      <p className="qr-code-text">รหัสห้องเรียน: {cid || "ไม่มีข้อมูล"}</p>
       {cno && <p className="qr-code-text">รอบเช็คชื่อ: {cno}</p>}
     </div>
   );
