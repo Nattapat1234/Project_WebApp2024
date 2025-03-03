@@ -10,9 +10,11 @@ const CheckinDetail = () => {
   const [checkinInfo, setCheckinInfo] = useState(null);
   const [students, setStudents] = useState([]);
 
+  /** โหลดข้อมูลการเช็คชื่อ */
   useEffect(() => {
+    if (!cid || !cno) return;
+
     const fetchCheckinData = async () => {
-      if (!cid || !cno) return;
       try {
         const checkinRef = doc(db, "classroom", cid, "checkin", cno);
         const checkinSnap = await getDoc(checkinRef);
@@ -20,22 +22,31 @@ const CheckinDetail = () => {
         if (checkinSnap.exists()) {
           setCheckinInfo(checkinSnap.data());
         } else {
-          console.error("ไม่พบข้อมูลรอบเช็คชื่อ");
+          console.error("❌ ไม่พบข้อมูลรอบเช็คชื่อ");
         }
       } catch (error) {
-        console.error("เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
+        console.error("❌ เกิดข้อผิดพลาดในการดึงข้อมูล:", error);
       }
     };
 
     fetchCheckinData();
   }, [cid, cno]);
 
+  /** โหลดรายชื่อนักเรียนที่เช็คชื่อแบบ Realtime */
   useEffect(() => {
     if (!cid || !cno) return;
 
     const studentsRef = collection(db, "classroom", cid, "checkin", cno, "students");
     const unsubscribeStudents = onSnapshot(studentsRef, (snapshot) => {
-      setStudents(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setStudents(snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          name: data.name,
+          stdid: data.stdid,
+          checkinTime: data.checkinTime?.toDate ? data.checkinTime.toDate().toLocaleString() : "ไม่มีข้อมูลเวลา" // ✅ แปลง Timestamp
+        };
+      }));
     });
 
     return () => unsubscribeStudents();
@@ -68,8 +79,8 @@ const CheckinDetail = () => {
         {students.length > 0 ? (
           students.map((student, index) => (
             <div key={student.id} className="student-item">
-              <p>{index + 1}. {student.name}</p>
-              <span className="checkin-time">เช็คชื่อเมื่อ: {new Date(student.checkinTime).toLocaleString()}</span>
+              <p>{index + 1}. {student.stdid} - {student.name}</p>
+              <span className="checkin-time">เช็คชื่อเมื่อ: {student.checkinTime}</span>
             </div>
           ))
         ) : (
