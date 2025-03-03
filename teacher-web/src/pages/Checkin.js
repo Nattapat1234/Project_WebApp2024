@@ -30,7 +30,7 @@ const Checkin = () => {
     fetchClassroomInfo();
   }, [cid]);
 
-  // ✅ ดึงประวัติการเช็คชื่อ
+  //  ดึงประวัติการเช็คชื่อ
   useEffect(() => {
     const checkinRef = collection(db, "classroom", cid, "checkin");
     const unsubscribe = onSnapshot(checkinRef, (snapshot) => {
@@ -89,7 +89,8 @@ const Checkin = () => {
         </div>
       )}
 
-      <h1 className="checkin-title">หน้าการเช็คชื่อ</h1>
+      <h1 className="checkin-title">การเช็คชื่อของ {classroom?.info?.name || "..."}</h1>
+
 
       <div className="menu-container">
         <button onClick={handleCreateCheckin} className="btn btn-new" disabled={loading}>
