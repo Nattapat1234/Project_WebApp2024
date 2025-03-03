@@ -1,91 +1,93 @@
 /* ✅ ปรับพื้นหลังและขนาดของคอนเทนเนอร์ */
 .question-container {
-  background-color: #e0e0e0;
-  padding: 30px;
-  border-radius: 15px;
-  max-width: 1100px; /* ✅ ให้เท่ากับหน้าเช็คชื่อ */
-  margin: 0 auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* Light theme background */
+  padding: 40px; /* Increased padding */
+  border-radius: 16px; /* Increased border-radius */
+  max-width: 1200px; /* Increased max-width */
+  margin: 20px auto; /* Added margin for better spacing */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Slightly increased shadow */
 }
 
 /* ✅ จัดสไตล์หัวข้อ */
 .question-title {
   text-align: center;
-  font-size: 26px;
+  font-size: 28px; /* Increased font size */
   font-weight: bold;
-  margin-bottom: 20px;
+  color: #333; /* Darker color for better contrast */
+  margin-bottom: 30px; /* Increased margin-bottom */
 }
 
 /* ✅ ปรับ input และฟอร์มให้ดูดีขึ้น */
 .question-form {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  background: #f9f9f9; /* Light background for form */
+  padding: 30px; /* Increased padding */
+  border-radius: 12px; /* Increased border-radius */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Slightly increased shadow */
+  margin-bottom: 30px; /* Increased margin-bottom */
 }
 
 .input-field {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 8px;
+  padding: 15px; /* Increased padding */
+  margin-bottom: 15px; /* Increased margin-bottom */
+  border-radius: 10px; /* Increased border-radius */
   border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 18px; /* Increased font size */
 }
 
 /* ✅ ปรับปุ่มให้เหมือนหน้าเช็คชื่อ */
 .button-container {
   display: flex;
-  gap: 10px;
+  gap: 15px; /* Increased gap */
 }
 
 .btn-create, .btn-close {
   flex: 1;
   text-align: center;
-  font-size: 16px;
-  padding: 12px;
-  border-radius: 8px;
+  font-size: 18px; /* Increased font size */
+  padding: 15px; /* Increased padding */
+  border-radius: 10px; /* Increased border-radius */
   cursor: pointer;
   border: none;
   transition: 0.3s ease-in-out;
 }
 
 .btn-create {
-  background-color: #4CAF50;
+  background-color: #28a745; /* Green color for create button */
   color: white;
 }
 
 .btn-close {
-  background-color: #c82333;
+  background-color: #dc3545; /* Red color for close button */
   color: white;
 }
 
 .btn-create:hover, .btn-close:hover {
-  opacity: 0.8;
+  opacity: 0.85; /* Slightly reduced opacity on hover */
 }
 
 /* ✅ ปรับดีไซน์ของรายการคำถาม */
 .question-list {
   list-style: none;
   padding: 0;
-  margin-top: 20px;
+  margin-top: 30px; /* Increased margin-top */
 }
 
 .question-item {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background: #ffffff; /* Light background for question item */
+  padding: 20px; /* Increased padding */
+  border-radius: 12px; /* Increased border-radius */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Slightly increased shadow */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px; /* Increased margin-bottom */
 }
 
 .question-item span {
-  font-size: 18px;
+  font-size: 20px; /* Increased font size */
   font-weight: bold;
+  color: #333; /* Darker color for better contrast */
   cursor: pointer;
 }
 
@@ -95,31 +97,32 @@
 }
 
 .btn-delete {
-  background-color: #ff3d3d;
+  background-color: #ff3d3d; /* Red color for delete button */
   color: white;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px; /* Increased padding */
+  border-radius: 10px; /* Increased border-radius */
   cursor: pointer;
   border: none;
 }
 
 .btn-delete:hover {
-  opacity: 0.8;
+  opacity: 0.85; /* Slightly reduced opacity on hover */
 }
 
 /* ✅ ปรับดีไซน์ของคำตอบ */
 .answer-container {
-  margin-top: 30px;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 40px; /* Increased margin-top */
+  background: #f9f9f9; /* Light background for answer container */
+  padding: 30px; /* Increased padding */
+  border-radius: 12px; /* Increased border-radius */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Slightly increased shadow */
 }
 
 .answer-title {
-  font-size: 22px;
+  font-size: 24px; /* Increased font size */
   font-weight: bold;
-  margin-bottom: 10px;
+  color: #333; /* Darker color for better contrast */
+  margin-bottom: 15px; /* Increased margin-bottom */
 }
 
 .answer-list {
@@ -128,24 +131,24 @@
 }
 
 .answer-item {
-  background-color: #f0f0f0;
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  font-size: 16px;
+  background-color: #e9ecef; /* Light background for answer item */
+  padding: 15px; /* Increased padding */
+  margin-bottom: 10px; /* Increased margin-bottom */
+  border-radius: 10px; /* Increased border-radius */
+  font-size: 18px; /* Increased font size */
 }
 
 /* ✅ ปรับดีไซน์ของรายชื่อนักเรียนที่ตอบคำถาม */
 .student-list {
   list-style: none;
   padding: 0;
-  margin-top: 10px;
+  margin-top: 20px; /* Increased margin-top */
 }
 
 .student-item {
-  background: #e9ecef;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  font-size: 16px;
+  background: #e9ecef; /* Light background for student item */
+  padding: 15px; /* Increased padding */
+  border-radius: 10px; /* Increased border-radius */
+  margin-bottom: 10px; /* Increased margin-bottom */
+  font-size: 18px; /* Increased font size */
 }
